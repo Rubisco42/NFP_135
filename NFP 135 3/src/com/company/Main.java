@@ -16,7 +16,7 @@ public class Main {
 
         double[][] promo = new double[nEtudiants][nNotes];
 
-        double note = -1;
+        float note = -1;
 
         for(int i = 0; i < nEtudiants; i++){
             System.out.println("Veillez saisir les notes de l'étudiant "+i);
