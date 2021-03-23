@@ -1,5 +1,6 @@
 package com.company;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Exo_notes {
@@ -12,18 +13,24 @@ public class Exo_notes {
 
         System.out.println("Veuillez saisir le nombre de notes par étudiants: ");
         int nNotes = scanner.nextInt();
+
         int posEtudiant =0;
-              
 
-        double[][] pRomo = new double[nEtudiants][nNotes];
-        double[] cumEtudiant = new double[nNotes];
-        double[] cumPromo = new double[nEtudiants];
+        float[][] pRomo = new float[nEtudiants][nNotes];
+        float[] cumEtudiant = new float[nNotes];
+        float[] cumPromo = new float[nEtudiants];
 
-        float cumNotes = 0;
         float note = -1;
+        float moyEtudiant=-1;
+
+        double moyHaute = -1;
+        double moyClasse = -1;
+        double somme =0;
+        double inter =0;
 
         for(int i = 0; i < nEtudiants; i++){
             System.out.println("Veillez saisir les notes de l'étudiant "+(i+1)+": ");
+            float cumNotes = 0;
 
             for(int j = 0; j< nNotes; j++){
                 System.out.println("note "+(j+1));
@@ -34,21 +41,29 @@ public class Exo_notes {
             for(double valeur : cumEtudiant){
                 cumNotes +=valeur;
             }
-            double moyEtudiant = cumNotes/nNotes;
+            System.out.println();
+            moyEtudiant = cumNotes/nNotes;
             System.out.println("l'étudiant "+(i+1)+" a " + moyEtudiant + " de moyenne");
 
             cumPromo[i]=moyEtudiant;
 
-
-
-            if(cumPromo[i]>cumPromo[i-1]){
-
+            if(i>0 && (cumPromo[i]>cumPromo[i-1])){
+                moyHaute = cumPromo[i];
+                posEtudiant = (i+1);
+            }else if(i == 0){
+                moyHaute = moyEtudiant;
+                posEtudiant = (i+1);
             }
 
-
-
         }
+        for (float[] pRo : pRomo){
+            for(double valeur : pRo){
+                somme += valeur;
+            }
+        }
+        moyClasse = somme/(nEtudiants*nNotes);
 
+        System.out.println("cette classe a "+moyClasse+" de moyenne. L'étudiant "+posEtudiant+" a la plus haute, avec "+moyHaute);
 
 
     }
