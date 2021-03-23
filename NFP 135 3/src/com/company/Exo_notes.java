@@ -1,6 +1,5 @@
 package com.company;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Exo_notes {
@@ -63,7 +62,7 @@ public class Exo_notes {
         }
         moyClasse = somme/(nEtudiants*nNotes);
 
-        System.out.println("cette classe a "+moyClasse+" de moyenne. L'étudiant "+posEtudiant+" a la plus haute, avec "+moyHaute);
+        System.out.println("La moyenne de la promotion est de "+moyClasse+". L'étudiant "+posEtudiant+" a les meilleures notes, avec "+moyHaute+" de moyenne.");
 
 
     }
