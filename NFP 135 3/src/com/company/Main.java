@@ -19,7 +19,7 @@ public class Main {
         float note = -1;
 
         for(int i = 0; i < nEtudiants; i++){
-            System.out.println("Veillez saisir les notes de l'étudiant "+i);
+            System.out.println("Veillez saisir les notes de l'étudiant "+(i+1)+": ");
 
             for(int j = 0; j< nNotes; j++){
                 System.out.println("note "+(j+1));
