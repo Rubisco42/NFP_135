@@ -12,10 +12,12 @@ public class Exo_notes {
 
         System.out.println("Veuillez saisir le nombre de notes par étudiants: ");
         int nNotes = scanner.nextInt();
+        int posEtudiant =0;
+              
 
-        float[][] pRomo = new float[nEtudiants][nNotes];
-        float[] cumEtudiant = new float[nNotes];
-        float[] cumPromo = new float [nEtudiants];
+        double[][] pRomo = new double[nEtudiants][nNotes];
+        double[] cumEtudiant = new double[nNotes];
+        double[] cumPromo = new double[nEtudiants];
 
         float cumNotes = 0;
         float note = -1;
@@ -29,11 +31,21 @@ public class Exo_notes {
                 pRomo[i][j]=note;
                 cumEtudiant[j] = note;
             }
-            for(float valeur : cumEtudiant){
+            for(double valeur : cumEtudiant){
                 cumNotes +=valeur;
             }
-            float moyEtudiant = cumNotes/nNotes;
+            double moyEtudiant = cumNotes/nNotes;
             System.out.println("l'étudiant "+(i+1)+" a " + moyEtudiant + " de moyenne");
+
+            cumPromo[i]=moyEtudiant;
+
+
+
+            if(cumPromo[i]>cumPromo[i-1]){
+
+            }
+
+
 
         }
 
