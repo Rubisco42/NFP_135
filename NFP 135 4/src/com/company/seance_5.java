@@ -1,9 +1,10 @@
 package com.company;
 
 public class seance_5 {
-    public class Main {
+    public static void prout(String[] args){
+
         //ce sont des methodes de la classe MAin
-        public static void main(String[] args) {
+        //public static void main(String[] args) {
             //ne pas écrire le nom des variables nombre, java aajoute seul. juste le nombre
             addition(40,2);
             addition(400, 4);
