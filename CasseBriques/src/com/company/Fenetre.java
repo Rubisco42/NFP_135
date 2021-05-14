@@ -32,6 +32,8 @@ public class Fenetre extends JFrame implements KeyListener{
         while(true){
             Graphics2D dessin = (Graphics2D)getBufferStrategy().getDrawGraphics();
 
+            positionHoriRectangle++;
+
 
 
             //effacer le dessin pour donner le mouvement
