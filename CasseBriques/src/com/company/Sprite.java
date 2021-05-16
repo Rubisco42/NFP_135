@@ -19,9 +19,9 @@ public abstract class Sprite extends Graphics2D {
     // correspondant au jeu.
 
     //variable de la position sur les axes X et Y du sprite
-    private int positionX;
+    protected int positionX;
     private int positionY;
-    private String nom;
+
 
     //couleur du sprite
     private Color color;
@@ -32,11 +32,11 @@ public abstract class Sprite extends Graphics2D {
 
     //methode pour afficher le sprite dans le Jpanel.
     public void dessiner(Graphics2D dessin){
-
     }
 
 
     //les accesseurs qui permettront de modifier les position en X et Y ainsi que la couleur du sprite.
+
     public void setPositionX(int positionX) {
         this.positionX = positionX;
     }
@@ -62,4 +62,6 @@ public abstract class Sprite extends Graphics2D {
     public Color getColor() {
         return color;
     }
+
+
 }
