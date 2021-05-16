@@ -13,13 +13,13 @@ import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
-public abstract class Sprite extends Graphics2D {
+abstract class Sprite extends Graphics2D {
     //La classe sprite sert de base aux éléments mobiles.
     // Elle contient les methodes de bases pour la position des objets, la couleur et leur dessin dans le JPanel
     // correspondant au jeu.
 
     //variable de la position sur les axes X et Y du sprite
-    protected int positionX;
+    private int positionX;
     private int positionY;
 
 
