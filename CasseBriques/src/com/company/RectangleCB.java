@@ -13,17 +13,32 @@ import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
 abstract class RectangleCB extends Sprite{
+    //champs pour déterminer la largeur et la hauteur de tous les objets qui hériteront de la classe RectangleCB
+    int largeur;
+    int hauteur;
+
+    public RectangleCB() {
+    }
 
 
+    // les accesseurs pour les champs Largeur et hauteur.
+    public int getLargeur() {
+        return largeur;
+    }
 
+    public int getHauteur() {
+        return hauteur;
+    }
 
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
 
+    public void setHauteur(int hauteur) {
+        this.hauteur = hauteur;
+    }
 
-
-
-
-
-
+    //idem que pour la classe Sphere, obliger de surcharger les méthodes de Graphics et Graphics2D.
     @Override
     public void draw(Shape s) {
 

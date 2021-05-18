@@ -37,7 +37,7 @@ public class Fenetre extends JFrame implements KeyListener{
         listeBalle.add(balle);
 
         // on prepare le remplissage de rectangle avec un gradient de couleur, il est necessaire d'avoir toutes les
-        //coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie.
+        // coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie.
         GradientPaint lave;
         ArrayList<GradientPaint>bordureBas=new ArrayList<>();
         for(int i=0;i<501;i++){
@@ -51,8 +51,6 @@ public class Fenetre extends JFrame implements KeyListener{
         // on commence une boucle infinie
         while(true){
             Graphics2D dessin = (Graphics2D)getBufferStrategy().getDrawGraphics();
-
-
 
             // effacer le dessin pour donner le mouvement et affichage des bordures de la zone de jeu:
             dessin.setColor(Color.BLACK);
@@ -83,10 +81,11 @@ public class Fenetre extends JFrame implements KeyListener{
             // on met à jour les psoition du centre de la (les) balle(s) pour pouvoir mettre à jour les points du périmetre
             listeBalle.forEach((Balle)-> balle.majCoordoCentre(balle));
             listeBalle.forEach((Balle)->balle.majListePointSphere(balle));
+            // on affiche la(les) balle(s)
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
-            //
+            // gestion des collision de la balle avec les paroies de l'environnement.
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());
             listeBalle.forEach((Balle)->balle.collisionHaut());
@@ -94,17 +93,6 @@ public class Fenetre extends JFrame implements KeyListener{
             //System.out.println(balle.getPositionCentreX());
             //System.out.println(balle.getPositionCentreY());
             //System.out.println(balle.getListePointSphere().get(6).getPointX());
-
-
-
-
-
-
-
-
-
-
-
 
             //on demande le rafraichissement de la fentre
             dessin.dispose();
