@@ -25,7 +25,7 @@ public class Balle extends Sphere{
 
 
 
-    // le constructeur de la classe balle :
+    // le constructeur de la classe balle,fait apparaitre la balle au milieu de la batte :
     public Balle() {
         setPositionX(positionInitaleX);
         setPositionY(positionInitialeY);
@@ -46,40 +46,13 @@ public class Balle extends Sphere{
 
     }
 
-    // methode pour mettre à jour les coordonnées du centre de la sphère:
+    // méthode pour mettre à jour les coordonnées du centre de la sphère:
     public void majCoordoCentre(Balle balle){
         balle.setPositionCentreX();
         balle.setPositionCentreY();
     }
 
-    // on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
-    public void collisionDroite(){
-        if(getPositionX()>=490) {
-            inverseVitesseHorizontale();
-        }
-    }
-
-    //on inverse la vitesse horizontale en cas de colision avec la paroie gauche de la fenetre:
-    public void collisionGauche(){
-        if(getPositionX()<=0){
-            inverseVitesseHorizontale();
-        }
-    }
-
-    //on inverse la vitesse verticale en cas de colision avec la paroie supérieure de la fenetre:
-    public void collisionHaut(){
-        if (getPositionY()<=0){
-            inverseVitesseVerticale();
-        }
-    }
-
-    //pour test à modifier pour perte vie/game over:
-    public void collisionBas(){
-        if (getPositionY()>=490){
-            inverseVitesseVerticale();
-        }
-    }
-
+    // méthodes pour modifier la direction de deplacement de la balle:
     public void inverseVitesseHorizontale(){
         vitesseHorizontale= -1*vitesseHorizontale;
     }
@@ -88,7 +61,35 @@ public class Balle extends Sphere{
         vitesseVerticale= -1*vitesseVerticale;
     }
 
-    //accesseurs pour la positon initiale et les vitesses:
+    // on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
+    public void collisionDroite(){
+        if(getPositionX()>=487) {
+            inverseVitesseHorizontale();
+        }
+    }
+
+    // on inverse la vitesse horizontale en cas de colision avec la paroie gauche de la fenetre:
+    public void collisionGauche(){
+        if(getPositionX()<=0){
+            inverseVitesseHorizontale();
+        }
+    }
+
+    // on inverse la vitesse verticale en cas de colision avec la paroie supérieure de la fenetre:
+    public void collisionHaut(){
+        if (getPositionY()<=40){
+            inverseVitesseVerticale();
+        }
+    }
+
+    // pour test à modifier pour perte vie/game over:
+    public void collisionBas(){
+        if (getPositionY()>=490){
+            inverseVitesseVerticale();
+        }
+    }
+
+    // accesseurs pour la positon initiale et les vitesses:
 
     public int getPositionInitaleX() {
         return positionInitaleX;
