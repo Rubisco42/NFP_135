@@ -14,73 +14,28 @@ import java.util.ArrayList;
 import java.util.Map;
 
 abstract class Sphere extends Sprite {
-
-
-
-    /*On utilise la méthode Graphics2D.fill/drawOval pour obtenir une sphère. Elle sera dessinée dans un rectangle,
+    /* On utilise la méthode Graphics2D.fill/drawOval pour obtenir une sphère. Elle sera dessinée dans un rectangle,
     (ou plutôt un carré dans ce cas) invisible. Les coordonnées X et Y correspondront au coin supérieur gauche de ce
     dernier.
-    le rayon sera égal à 1/2*la hauteur= 1/2* la largeur.*/
+    le rayon sera égal à 1/2*la hauteur= 1/2* la largeur. */
 
     private int largeur;
     private int hauteur;
     private int rayon;
 
+    // les variables suivantes serviront pour la gestion des collisions:
 
-    //les variables suivantes serviront pour la gestion des collisions:
-
-    //on stock la position du centre de la sphere.
+    // on stock les coordonnées du centre de la sphere.
     private int[] positionCentre=new int[2];
 
-    //on utilisera une valeur d'angle, de 0 à 359, pour calculer la position des points sur le perimetre de la sphère:
-    //on laisse le champ angle accessible aux classes filles pour incrémenter sa valeur sans utiliser d'accesseur.
+    // on utilisera une valeur d'angle, de 0 à 359, pour calculer la position des points sur le perimetre de la sphère:
     private double angle;
 
-    //on stock toutes les instances de Point dans un ArrayList, pour y accéder ultérieurement via leur index:
+    // on stock toutes les instances de Point dans un ArrayList, pour y accéder ultérieurement via leur index:
     private ArrayList<PointSphere> listePointSphere =new ArrayList<>();
 
-    //constructeur ne comprenenant que les positions X et Y;
-
-
+    // constructeur vide, sera précisé dans la classe balle:
     public Sphere() {
-    }
-
-    //on va creer une classe dont chaque instance sera un point du perimètre de la sphère:
-    public class PointSphere extends Sphere{
-        //les champs suivants correspondent aux coordonnées X et Y de chaque point du périmètre:
-        private int pointX;
-        private int pointY;
-
-
-        public PointSphere(Balle balle) {
-            setPointX(balle);
-            setPointY(balle);
-        }
-
-        //on calcule la position du Point sur le périmètre:
-
-        public void setPointX(Balle balle) {
-            this.pointX = (int)(balle.getPositionCentreX()+(balle.getRayon()*Math.cos(balle.getAngle())));
-        }
-
-        public void setPointY(Balle balle) {
-            this.pointY = (int)(balle.getPositionCentreY()+(balle.getRayon()*Math.sin(balle.getAngle())));
-        }
-
-        //on récupère la position du Point sur le périmètre:
-
-        public int getPointX() {
-            return pointX;
-        }
-
-        public int getPointY() {
-            return pointY;
-        }
-
-        public void dessinerPointSphere(Graphics2D dessin){
-            dessin.setColor(Color.BLUE);
-            dessin.fillRect(getPointX(),getPointY(),1,1);
-        }
     }
 
     // On précise la méthode dessiner pour une sphère:
@@ -89,8 +44,6 @@ abstract class Sphere extends Sprite {
         super.dessiner(dessin);
         dessin.fillOval(getPositionX(),getPositionY(),getLargeur(),getHauteur());
     }
-
-
 
     // méthode pour remplir l'arraylist avec chaque point sur le périmètre de la sphère:
     public void remplirlistePointSphere(Balle balle) {
@@ -103,7 +56,7 @@ abstract class Sphere extends Sprite {
         }
     }
 
-    //méthode pour modifier les coordonnées de chaque instance de Point dans l'arraylist:
+    // méthode pour modifier les coordonnées de chaque instance de Point dans l'arraylist:
     public void majListePointSphere(Balle balle){
         balle.setPositionCentreX();
         balle.setPositionCentreY();
@@ -115,17 +68,14 @@ abstract class Sphere extends Sprite {
         }
     }
 
-
-
+    // méthode pour afficher les points du périmètre si besoin:
     public void afficherPointPerimetre(Graphics2D dessin, Balle balle){
         for(int i=0;i<360;i++){
             balle.getListePointSphere().get(i).dessinerPointSphere(dessin);
         }
     }
 
-
-
-    //On prévoit les accesseurs pour toutes les variables.
+    // On prévoit les accesseurs pour toutes les variables.
     public void setHauteur(int hauteur) {
         this.hauteur = hauteur;
     }
@@ -166,7 +116,7 @@ abstract class Sphere extends Sprite {
         return angle;
     }
 
-    //on determine la position du centre de la sphere.
+    // on determine la position du centre de la sphere.
     public void setPositionCentreX(){
         positionCentre[0]= getPositionX()+getRayon();
     }
@@ -181,10 +131,7 @@ abstract class Sphere extends Sprite {
     }
 
 
-
-
-
-    //Sphere hérite de Sprite,on doit surcharger les methodes des classes Graphics et Graphics 2D.
+    // Sphere hérite de Sprite,on doit surcharger les methodes des classes Graphics et Graphics 2D.
     @Override
     public void draw(Shape s) {
 

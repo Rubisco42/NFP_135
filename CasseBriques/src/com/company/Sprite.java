@@ -14,7 +14,7 @@ import java.text.AttributedCharacterIterator;
 import java.util.Map;
 
 abstract class Sprite extends Graphics2D {
-    //La classe sprite sert de base aux éléments mobiles.
+    // La classe sprite sert de base aux éléments mobiles.
     // Elle contient les methodes de bases pour la position des objets, la couleur et leur dessin dans le JPanel
     // correspondant au jeu.
 
@@ -27,13 +27,11 @@ abstract class Sprite extends Graphics2D {
     public Sprite() {
     }
 
-    //methode pour afficher le sprite dans le Jpanel.
+    // methode pour afficher le sprite dans le Jpanel.
     public void dessiner(Graphics2D dessin){
     }
 
-
-    //les accesseurs qui permettront de récupérer/modifier les positions en X et Y du sprite.
-
+    // les accesseurs qui permettront de récupérer/modifier les positions en X et Y du sprite.
     public void setPositionX(int positionX) {
         this.positionX = positionX;
     }
@@ -50,6 +48,8 @@ abstract class Sprite extends Graphics2D {
         return positionY;
     }
 
+    // on surcharge les accesseurs pour la couleur en raison de l'héritage de Graphics2D, même s'ils ne servent à rien (j'avais, à la base, créé un champ
+    // couleur, retiré par la suite)
     @Override
     public Color getColor() {
         return null;

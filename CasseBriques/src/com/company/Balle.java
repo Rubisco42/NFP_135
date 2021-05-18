@@ -15,15 +15,17 @@ import java.util.Map;
 
 public class Balle extends Sphere{
 
-    // on determine les valeurs de déplacement horizontal et vertical de la balle:
+    // les champs suivants correspondent aux valeurs de déplacement horizontal et vertical de la balle:
     private int vitesseHorizontale;
     private int vitesseVerticale;
+
+    // les champs suivants correspondent à la positon initale de la balle (début de partie, création d'un nouvelle balle)
     private int positionInitaleX=250;
     private int positionInitialeY=450;
 
 
 
-    //le constructeur de la classe balle :
+    // le constructeur de la classe balle :
     public Balle() {
         setPositionX(positionInitaleX);
         setPositionY(positionInitialeY);
@@ -34,9 +36,9 @@ public class Balle extends Sphere{
         setPositionCentreY();
         setVitesseHorizontale(-2);
         setVitesseVerticale(-3);
-
     }
 
+    // on précise la méthode pour dessiner une balle
     @Override
     public void dessiner(Graphics2D dessin) {
         dessin.setColor(Color.MAGENTA);
@@ -44,14 +46,13 @@ public class Balle extends Sphere{
 
     }
 
-    //methode pour mettre à jour les coordonnées du centre de la sphère:
+    // methode pour mettre à jour les coordonnées du centre de la sphère:
     public void majCoordoCentre(Balle balle){
         balle.setPositionCentreX();
         balle.setPositionCentreY();
     }
 
-
-    //on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
+    // on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
     public void collisionDroite(){
         if(getPositionX()>=490) {
             inverseVitesseHorizontale();
