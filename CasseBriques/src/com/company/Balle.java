@@ -26,9 +26,9 @@ public class Balle extends Sphere{
 
 
     // le constructeur de la classe balle,fait apparaitre la balle au milieu de la batte :
-    public Balle() {
-        setPositionX(positionInitaleX);
-        setPositionY(positionInitialeY);
+    public Balle(Barre barre) {
+        setPositionX(barre.getMilieuX()-5);
+        setPositionY(barre.getMilieuY()-10);
         setLargeur(10);
         setHauteur(10);
         setRayon(5);

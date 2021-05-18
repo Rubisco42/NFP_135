@@ -28,8 +28,12 @@ public class Fenetre extends JFrame implements KeyListener{
     }
 
     private Void initialisationJeu(){
-        int positionHoriRectangle=0;
-        Balle balle= new Balle();
+
+        // on cré d'abord la barre pour générer la balle sur le centre du coté supérieur
+        Barre barre= new Barre();
+
+
+        Balle balle= new Balle(barre);
         balle.remplirlistePointSphere(balle);
 
         //on cré un ArrayList qui permettra de gérer un affichage multiballe.
@@ -55,15 +59,15 @@ public class Fenetre extends JFrame implements KeyListener{
             // effacer le dessin pour donner le mouvement et affichage des bordures de la zone de jeu:
             dessin.setColor(Color.BLACK);
             dessin.fillRect(0,0,500,500);
-            // bordure haute (chez moio la balle rentre dans l'entête de la fenêtre)
+            // bordure haute (chez moi la balle rentre dans l'entête de la fenêtre)
             dessin.setColor(Color.DARK_GRAY);
             dessin.fillRect(0,0,500,40);
             // bordure gauche:
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(0,0,3,490);
+            dessin.fillRect(0,0,5,490);
             // bordure droite
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(497,0,3,490);
+            dessin.fillRect(497,0,5,490);
             // bordure bas
             //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient(ralenti le jeu)
             for(int i=0;i<501;i++) {
