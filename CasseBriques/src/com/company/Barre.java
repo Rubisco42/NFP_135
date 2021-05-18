@@ -27,16 +27,16 @@ public class Barre extends RectangleCB{
     }
 
     public void deplacementDroite(){
-        if(getPositionX()<495){
+        if(getPositionX()<(495-getLargeur())){
             setPositionX(getPositionX()+getVitesse());
         }
     }
 
-    // methode pour modifier la psotion du milieu du coté supérieur
+    // methode pour modifier la position du milieu du coté supérieur
     public void modifMilieu(){
         setMilieuX(getPositionX()+(getLargeur()/2));
     }
-    
+
 
 
     // les accesseurs pour les propriétés de Barre
