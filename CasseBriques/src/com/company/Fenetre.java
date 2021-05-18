@@ -30,10 +30,13 @@ public class Fenetre extends JFrame implements KeyListener{
     private Void initialisationJeu(){
         int positionHoriRectangle=0;
         Balle balle= new Balle();
+        balle.remplirlistePointSphere(balle);
 
         //on cré un ArrayList qui permettra de gérer un affichage multiballe.
         ArrayList<Balle> listeBalle = new ArrayList<>();
         listeBalle.add(balle);
+
+
 
 
 
@@ -50,12 +53,20 @@ public class Fenetre extends JFrame implements KeyListener{
             balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
             balle.setPositionX(balle.getPositionX()+balle.getVitesseHorizontale());
 
+            listeBalle.forEach((Balle)-> balle.majCoordoCentre(balle));
+            listeBalle.forEach((Balle)->balle.majListePointSphere(balle));
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
+            listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
+
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());
             listeBalle.forEach((Balle)->balle.collisionHaut());
             listeBalle.forEach((Balle)->balle.collisionBas());
-            System.out.println(balle.getRayon());
+            //System.out.println(balle.getPositionCentreX());
+            //System.out.println(balle.getPositionCentreY());
+            //System.out.println(balle.getListePointSphere().get(6).getPointX());
+
+
 
 
 

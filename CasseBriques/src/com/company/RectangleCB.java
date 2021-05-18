@@ -23,6 +23,7 @@ abstract class RectangleCB extends Sprite{
 
 
 
+
     @Override
     public void draw(Shape s) {
 

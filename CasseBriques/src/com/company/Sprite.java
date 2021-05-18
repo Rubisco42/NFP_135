@@ -23,9 +23,6 @@ abstract class Sprite extends Graphics2D {
     private int positionY;
 
 
-    //couleur du sprite
-    private Color color;
-
     // constructeur vide, les constructeurs des classes filles seront plus spécifiques.
     public Sprite() {
     }
@@ -35,7 +32,7 @@ abstract class Sprite extends Graphics2D {
     }
 
 
-    //les accesseurs qui permettront de modifier les position en X et Y ainsi que la couleur du sprite.
+    //les accesseurs qui permettront de récupérer/modifier les positions en X et Y du sprite.
 
     public void setPositionX(int positionX) {
         this.positionX = positionX;
@@ -43,11 +40,6 @@ abstract class Sprite extends Graphics2D {
 
     public void setPositionY(int positionY) {
         this.positionY = positionY;
-    }
-
-    @Override
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public int getPositionX() {
@@ -60,8 +52,11 @@ abstract class Sprite extends Graphics2D {
 
     @Override
     public Color getColor() {
-        return color;
+        return null;
     }
 
+    @Override
+    public void setColor(Color c) {
 
+    }
 }

@@ -26,6 +26,7 @@ abstract class Sphere extends Sprite {
     private int hauteur;
     private int rayon;
 
+
     //les variables suivantes serviront pour la gestion des collisions:
 
     //on stock la position du centre de la sphere.
@@ -33,7 +34,7 @@ abstract class Sphere extends Sprite {
 
     //on utilisera une valeur d'angle, de 0 à 359, pour calculer la position des points sur le perimetre de la sphère:
     //on laisse le champ angle accessible aux classes filles pour incrémenter sa valeur sans utiliser d'accesseur.
-    protected double angle;
+    private double angle;
 
     //on stock toutes les instances de Point dans un ArrayList, pour y accéder ultérieurement via leur index:
     private ArrayList<PointSphere> listePointSphere =new ArrayList<>();
@@ -50,55 +51,90 @@ abstract class Sphere extends Sprite {
         private int pointX;
         private int pointY;
 
-        public PointSphere() {
-            this.setPointX();
-            this.setPointY();
+
+        public PointSphere(Balle balle) {
+            setPointX(balle);
+            setPointY(balle);
         }
 
         //on calcule la position du Point sur le périmètre:
 
-        public void setPointX() {
-            this.pointX = getPositionCentreX()+(int)(getRayon()*Math.cos(angle));
+        public void setPointX(Balle balle) {
+            this.pointX = (int)(balle.getPositionCentreX()+(balle.getRayon()*Math.cos(balle.getAngle())));
+            System.out.println("+++++++++++++++++");
+            System.out.println(balle.getAngle());
+            System.out.println("+++++++++++++++++");
+            System.out.println(pointX);
+            System.out.println("+++++++++++++++++");
         }
 
-        public void setPointY() {
-            this.pointY = getPositionCentreY()+(int)(getRayon()*Math.sin(angle));
+        public void setPointY(Balle balle) {
+            this.pointY = (int)(balle.getPositionCentreY()+(balle.getRayon()*Math.sin(balle.getAngle())));
         }
 
         //on récupère la position du Point sur le périmètre:
 
-        public double getPointX() {
+        public int getPointX() {
             return pointX;
         }
 
-        public double getPointY() {
+        public int getPointY() {
             return pointY;
         }
-    }
 
-    // méthode pour remplir l'arraylist avec chaque point sur le périmètre de la sphère:
-    public void remplirlistePointSphere() {
-        for(angle=0;angle<360;angle++){
-            PointSphere point=new PointSphere();
-            listePointSphere.add(point);
+        public void dessinerPointSphere(Graphics2D dessin){
+            dessin.setColor(Color.BLUE);
+            dessin.fillRect(getPointX(),getPointY(),10,10);
         }
-    }
-
-    //méthode pour modifier les coordonnées de chaque instance de Point dans l'arraylist:
-    public void majListePointSphere(){
-        setPositionCentreX();
-        setPositionCentreY();
-        listePointSphere.forEach((point) -> point.setPointX());
-        listePointSphere.forEach((point) -> point.setPointY());
     }
 
     // On précise la méthode dessiner pour une sphère:
-
     @Override
     public void dessiner(Graphics2D dessin) {
         super.dessiner(dessin);
         dessin.fillOval(getPositionX(),getPositionY(),getLargeur(),getHauteur());
     }
+
+
+
+    // méthode pour remplir l'arraylist avec chaque point sur le périmètre de la sphère:
+    public void remplirlistePointSphere(Balle balle) {
+        PointSphere point;
+        balle.setAngle(0);
+        for(int i=0;i<360;i++){
+            point=new PointSphere(balle);
+            balle.getListePointSphere().add(point);
+            balle.setAngle(balle.getAngle()+1);
+        }
+    }
+
+    //méthode pour modifier les coordonnées de chaque instance de Point dans l'arraylist:
+    public void majListePointSphere(Balle balle){
+        balle.setPositionCentreX();
+        balle.setPositionCentreY();
+        balle.setAngle(0);
+        for(int i =0;i<360;i++){
+            balle.getListePointSphere().get(i).setPointX(balle);
+            balle.getListePointSphere().get(i).setPointY(balle);
+            System.out.println(balle.getAngle());
+            System.out.println("------------");
+            System.out.println(balle.getListePointSphere().get(i).getPointX());
+            System.out.println("------------");
+            System.out.println(balle.getListePointSphere().get(i).getPointY());
+            System.out.println("------------");
+            balle.setAngle(getAngle()+1);
+        }
+    }
+
+
+
+    public void afficherPointPerimetre(Graphics2D dessin, Balle balle){
+        for(int i=0;i<360;i++){
+            balle.getListePointSphere().get(i).dessinerPointSphere(dessin);
+        }
+    }
+
+
 
     //On prévoit les accesseurs pour toutes les variables.
     public void setHauteur(int hauteur) {
@@ -133,6 +169,14 @@ abstract class Sphere extends Sprite {
         this.listePointSphere = listePointSphere;
     }
 
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public double getAngle() {
+        return angle;
+    }
+
     //on determine la position du centre de la sphere.
     public void setPositionCentreX(){
         positionCentre[0]= getPositionX()+getRayon();
@@ -147,7 +191,11 @@ abstract class Sphere extends Sprite {
         return positionCentre[1];
     }
 
-    //Sphere hérite de Sprite,on surcharge les methodes de la classe Graphics2D.
+
+
+
+
+    //Sphere hérite de Sprite,on doit surcharger les methodes des classes Graphics et Graphics 2D.
     @Override
     public void draw(Shape s) {
 

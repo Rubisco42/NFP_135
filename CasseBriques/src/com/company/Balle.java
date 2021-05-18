@@ -10,6 +10,7 @@ import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Balle extends Sphere{
@@ -29,9 +30,11 @@ public class Balle extends Sphere{
         setLargeur(10);
         setHauteur(10);
         setRayon(5);
+        setPositionCentreX();
+        setPositionCentreY();
         setVitesseHorizontale(-2);
         setVitesseVerticale(-3);
-        remplirlistePointSphere();
+
     }
 
     @Override
@@ -40,6 +43,13 @@ public class Balle extends Sphere{
         super.dessiner(dessin);
 
     }
+
+    //methode pour mettre à jour les coordonnées du centre de la sphère:
+    public void majCoordoCentre(Balle balle){
+        balle.setPositionCentreX();
+        balle.setPositionCentreY();
+    }
+
 
     //on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
     public void collisionDroite(){
