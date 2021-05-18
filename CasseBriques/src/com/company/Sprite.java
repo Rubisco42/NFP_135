@@ -18,16 +18,19 @@ abstract class Sprite extends Graphics2D {
     // Elle contient les methodes de bases pour la position des objets, la couleur et leur dessin dans le JPanel
     // correspondant au jeu.
 
-    //variable de la position sur les axes X et Y du sprite
+    // variables de la position sur les axes X et Y du sprite
     private int positionX;
     private int positionY;
+
+    // couleur du sprite;
+    private Color couleur;
 
 
     // constructeur vide, les constructeurs des classes filles seront plus spécifiques.
     public Sprite() {
     }
 
-    // methode pour afficher le sprite dans le Jpanel.
+    // methode pour afficher le sprite dans le JFrame/Jpanel.
     public void dessiner(Graphics2D dessin){
     }
 
@@ -48,15 +51,15 @@ abstract class Sprite extends Graphics2D {
         return positionY;
     }
 
-    // on surcharge les accesseurs pour la couleur en raison de l'héritage de Graphics2D, même s'ils ne servent à rien (j'avais, à la base, créé un champ
-    // couleur, retiré par la suite)
+    // on surcharge les accesseurs pour la couleur en raison de l'héritage de Graphics2D,
     @Override
     public Color getColor() {
         return null;
     }
 
     @Override
-    public void setColor(Color c) {
+    public void setColor(Color couleur) {
+        this.couleur=couleur;
 
     }
 }
