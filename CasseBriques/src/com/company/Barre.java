@@ -19,7 +19,7 @@ public class Barre extends RectangleCB{
         setVitesse(2);
     }
 
-    // les methodes de déplacement de la barre:
+    // les methodes de déplacement de la barre, en évitant que la barre ne traverse les paroies latérales:
     public void deplacementGauche(){
         if(getPositionX()>5){
             setPositionX(getPositionX()-getVitesse());
