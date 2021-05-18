@@ -28,6 +28,15 @@ abstract class RectangleCB extends Sprite{
     public RectangleCB() {
     }
 
+    //methode dessiner pour les rectangles
+
+
+    @Override
+    public void dessiner(Graphics2D dessin) {
+        super.dessiner(dessin);
+        dessin.fillRect(getPositionX(),getPositionY(),getLargeur(),getHauteur());
+    }
+
     // Les methodes qui permettent de remplir chaque arrayList, on ajoute la largeur ou la hauteur selon le coté,
     // pour obtenirla gamme de coordonnées
     public void remplirCoteHaut(){
