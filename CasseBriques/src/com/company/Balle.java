@@ -34,8 +34,8 @@ public class Balle extends Sphere{
         setRayon(5);
         setPositionCentreX();
         setPositionCentreY();
-        setVitesseHorizontale(-2);
-        setVitesseVerticale(-3);
+        setVitesseHorizontale(-4);
+        setVitesseVerticale(-6);
     }
 
     // on précise la méthode pour dessiner une balle

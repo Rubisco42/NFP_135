@@ -36,6 +36,14 @@ public class Fenetre extends JFrame implements KeyListener{
         ArrayList<Balle> listeBalle = new ArrayList<>();
         listeBalle.add(balle);
 
+        // on prepare le remplissage de rectangle avec un gradient de couleur, il est necessaire d'avoir toutes les
+        //coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie.
+        GradientPaint lave;
+        ArrayList<GradientPaint>bordureBas=new ArrayList<>();
+        for(int i=0;i<501;i++){
+            lave=new GradientPaint(i,500,Color.YELLOW,i,490,Color.RED,true);
+            bordureBas.add(lave);
+        }
 
 
 
@@ -43,6 +51,7 @@ public class Fenetre extends JFrame implements KeyListener{
         // on commence une boucle infinie
         while(true){
             Graphics2D dessin = (Graphics2D)getBufferStrategy().getDrawGraphics();
+
 
 
             // effacer le dessin pour donner le mouvement et affichage des bordures de la zone de jeu:
@@ -53,13 +62,17 @@ public class Fenetre extends JFrame implements KeyListener{
             dessin.fillRect(0,0,500,40);
             // bordure gauche:
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(0,0,3,497);
+            dessin.fillRect(0,0,3,490);
             // bordure droite
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(497,0,3,497);
+            dessin.fillRect(497,0,3,490);
             // bordure bas
-            dessin.setColor(Color.RED);
-            dessin.fillRect(0,497,500,3);
+            //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient(ralenti le jeu)
+            for(int i=0;i<501;i++) {
+                dessin.setPaint(bordureBas.get(i));
+                dessin.fillRect(i, 490, 1, 10);
+            }
+
 
             // tout le contenu à rafraichir:
 
@@ -100,7 +113,7 @@ public class Fenetre extends JFrame implements KeyListener{
             try{
                 // thread=processus actuel
                 // on defini la fréquence de rafraichissement en incluant une pause dans l'execution de la boucle
-                Thread.sleep(1000/60);
+                Thread.sleep(1000/90);
             }catch(Exception e){
 
             }
