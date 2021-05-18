@@ -10,14 +10,63 @@ import java.awt.image.ImageObserver;
 import java.awt.image.RenderedImage;
 import java.awt.image.renderable.RenderableImage;
 import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.Map;
 
 abstract class RectangleCB extends Sprite{
-    //champs pour déterminer la largeur et la hauteur de tous les objets qui hériteront de la classe RectangleCB
+    // champs pour déterminer la largeur et la hauteur de tous les objets qui hériteront de la classe RectangleCB
     int largeur;
     int hauteur;
 
+    // initialisation des arryalists qui stockeront les pooints de chaque côté du rectangle
+    ArrayList<PointRectangle>coteHaut=new ArrayList<>();
+    ArrayList<PointRectangle>coteBas=new ArrayList<>();
+    ArrayList<PointRectangle>coteGauche=new ArrayList<>();
+    ArrayList<PointRectangle>coteDroit=new ArrayList<>();
+
+
     public RectangleCB() {
+    }
+
+    // Les methodes qui permettent de remplir chaque arrayList
+    public void remplirCoteHaut(){
+        PointRectangle point;
+        for (int i=0;i<getLargeur()+1;i++){
+            point=new PointRectangle();
+            point.setPointX(getPositionX()+i);
+            point.setPointY(getPositionY());
+            coteHaut.add(point);
+        }
+    }
+
+    public void remplirCoteBas(){
+        PointRectangle point;
+        for (int i=0;i<getLargeur()+1;i++){
+            point=new PointRectangle();
+            point.setPointX(getPositionX()+i);
+            point.setPointY(getPositionY()+getHauteur());
+            coteBas.add(point);
+        }
+    }
+
+    public void remplirCoteGauche(){
+        PointRectangle point;
+        for (int i=0;i<getHauteur()+1;i++){
+            point=new PointRectangle();
+            point.setPointX(getPositionX());
+            point.setPointY(getPositionY()+i);
+            coteGauche.add(point);
+        }
+    }
+
+    public void remplirCoteDroit(){
+        PointRectangle point;
+        for (int i=0;i<getHauteur()+1;i++){
+            point=new PointRectangle();
+            point.setPointX(getPositionX()+getLargeur());
+            point.setPointY(getPositionY()+i);
+            coteDroit.add(point);
+        }
     }
 
 
