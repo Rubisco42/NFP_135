@@ -24,11 +24,12 @@ abstract class RectangleCB extends Sprite{
     ArrayList<PointRectangle>coteGauche=new ArrayList<>();
     ArrayList<PointRectangle>coteDroit=new ArrayList<>();
 
-
+    //constructeur qui sera précisé dans les classes filles
     public RectangleCB() {
     }
 
-    // Les methodes qui permettent de remplir chaque arrayList
+    // Les methodes qui permettent de remplir chaque arrayList, on ajoute la largeur ou la hauteur selon le coté,
+    // pour obtenirla gamme de coordonnées
     public void remplirCoteHaut(){
         PointRectangle point;
         for (int i=0;i<getLargeur()+1;i++){
@@ -69,8 +70,40 @@ abstract class RectangleCB extends Sprite{
         }
     }
 
+    // les methodes qui permettent de mettre à jour les coordonnées des éléments de chaque arrayList
+    // il serotn utilisés surtout par la batte, sans savoir comment ce programme va évoluer, les methodes sont complète au cas où.
 
-    // les accesseurs pour les champs Largeur et hauteur.
+    public void majCoteHaut(){
+        for (int i=0;i<getCoteHaut().size();i++){
+            getCoteHaut().get(i).setPointX(getPositionX()+i);
+            getCoteHaut().get(i).setPointY(getPositionY());
+        }
+    }
+
+    public void majCoteBas(){
+        for (int i=0;i<getCoteBas().size();i++){
+            getCoteBas().get(i).setPointX(getPositionX()+i);
+            getCoteBas().get(i).setPointY(getPositionY()+getHauteur());
+        }
+    }
+
+    public void majCoteGauche(){
+        for (int i=0;i<getCoteGauche().size();i++){
+            getCoteGauche().get(i).setPointX(getPositionX());
+            getCoteGauche().get(i).setPointY(getPositionY()+i);
+        }
+    }
+
+    public void majCoteDroit(){
+        for (int i=0;i<getCoteDroit().size();i++){
+            getCoteDroit().get(i).setPointX(getPositionX()+getLargeur());
+            getCoteDroit().get(i).setPointY(getPositionY()+i);
+        }
+    }
+
+
+
+    // les accesseurs pour les champs Largeur et hauteur et les differents arraylists
     public int getLargeur() {
         return largeur;
     }
@@ -85,6 +118,38 @@ abstract class RectangleCB extends Sprite{
 
     public void setHauteur(int hauteur) {
         this.hauteur = hauteur;
+    }
+
+    public ArrayList<PointRectangle> getCoteHaut() {
+        return coteHaut;
+    }
+
+    public ArrayList<PointRectangle> getCoteBas() {
+        return coteBas;
+    }
+
+    public ArrayList<PointRectangle> getCoteGauche() {
+        return coteGauche;
+    }
+
+    public ArrayList<PointRectangle> getCoteDroit() {
+        return coteDroit;
+    }
+
+    public void setCoteHaut(ArrayList<PointRectangle> coteHaut) {
+        this.coteHaut = coteHaut;
+    }
+
+    public void setCoteBas(ArrayList<PointRectangle> coteBas) {
+        this.coteBas = coteBas;
+    }
+
+    public void setCoteGauche(ArrayList<PointRectangle> coteGauche) {
+        this.coteGauche = coteGauche;
+    }
+
+    public void setCoteDroit(ArrayList<PointRectangle> coteDroit) {
+        this.coteDroit = coteDroit;
     }
 
     //idem que pour la classe Sphere, obliger de surcharger les méthodes de Graphics et Graphics2D.
