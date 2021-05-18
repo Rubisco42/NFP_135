@@ -56,7 +56,7 @@ public class Fenetre extends JFrame implements KeyListener{
             listeBalle.forEach((Balle)-> balle.majCoordoCentre(balle));
             listeBalle.forEach((Balle)->balle.majListePointSphere(balle));
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
-            listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
+            //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());

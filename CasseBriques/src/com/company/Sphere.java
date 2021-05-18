@@ -61,11 +61,6 @@ abstract class Sphere extends Sprite {
 
         public void setPointX(Balle balle) {
             this.pointX = (int)(balle.getPositionCentreX()+(balle.getRayon()*Math.cos(balle.getAngle())));
-            System.out.println("+++++++++++++++++");
-            System.out.println(balle.getAngle());
-            System.out.println("+++++++++++++++++");
-            System.out.println(pointX);
-            System.out.println("+++++++++++++++++");
         }
 
         public void setPointY(Balle balle) {
@@ -84,7 +79,7 @@ abstract class Sphere extends Sprite {
 
         public void dessinerPointSphere(Graphics2D dessin){
             dessin.setColor(Color.BLUE);
-            dessin.fillRect(getPointX(),getPointY(),10,10);
+            dessin.fillRect(getPointX(),getPointY(),1,1);
         }
     }
 
@@ -116,12 +111,6 @@ abstract class Sphere extends Sprite {
         for(int i =0;i<360;i++){
             balle.getListePointSphere().get(i).setPointX(balle);
             balle.getListePointSphere().get(i).setPointY(balle);
-            System.out.println(balle.getAngle());
-            System.out.println("------------");
-            System.out.println(balle.getListePointSphere().get(i).getPointX());
-            System.out.println("------------");
-            System.out.println(balle.getListePointSphere().get(i).getPointY());
-            System.out.println("------------");
             balle.setAngle(getAngle()+1);
         }
     }
