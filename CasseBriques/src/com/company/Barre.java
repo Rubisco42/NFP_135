@@ -1,5 +1,7 @@
 package com.company;
 
+import java.awt.*;
+
 public class Barre extends RectangleCB{
     // champ definissant la vitesse de déplacement horizontale de la barre
     int vitesse;
@@ -16,7 +18,16 @@ public class Barre extends RectangleCB{
         setHauteur(10);
         setMilieuX(250);
         setMilieuY(482);
-        setVitesse(2);
+        setVitesse(6);
+    }
+
+    // méthode pour dessiner la barre:
+
+
+    @Override
+    public void dessiner(Graphics2D dessin) {
+        dessin.setColor(Color.CYAN);
+        super.dessiner(dessin);
     }
 
     // les methodes de déplacement de la barre, en évitant que la barre ne traverse les paroies latérales:

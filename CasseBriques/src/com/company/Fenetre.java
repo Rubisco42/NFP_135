@@ -7,7 +7,8 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 public class Fenetre extends JFrame implements KeyListener{
-
+    boolean flecheGauche=false;
+    boolean flecheDroite=false;
 
     public Fenetre(){
         setSize(500,500);
@@ -28,9 +29,15 @@ public class Fenetre extends JFrame implements KeyListener{
     }
 
     private Void initialisationJeu(){
+        // on initialise les booléens qui seront utilisés pour le déplacement
+
+
 
         // on cré d'abord la barre pour générer la balle sur le centre du coté supérieur
         Barre barre= new Barre();
+        barre.remplirCoteHaut();
+        barre.remplirCoteDroit();
+        barre.remplirCoteGauche();
 
 
         Balle balle= new Balle(barre);
@@ -78,6 +85,21 @@ public class Fenetre extends JFrame implements KeyListener{
 
             // tout le contenu à rafraichir:
 
+            // On implémente les méthodes qui permettront le déplacement fluide de la barre:
+            if(flecheGauche==true){
+                barre.deplacementGauche();
+                barre.modifMilieu();
+                barre.majCoteHaut();
+                barre.majCoteGauche();
+                barre.majCoteDroit();
+            }else if (flecheDroite==true){
+                barre.deplacementDroite();
+                barre.modifMilieu();
+                barre.majCoteHaut();
+                barre.majCoteGauche();
+                barre.majCoteDroit();
+            }
+
             // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran:
             balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
             balle.setPositionX(balle.getPositionX()+balle.getVitesseHorizontale());
@@ -85,6 +107,9 @@ public class Fenetre extends JFrame implements KeyListener{
             // on met à jour les psoition du centre de la (les) balle(s) pour pouvoir mettre à jour les points du périmetre
             listeBalle.forEach((Balle)-> balle.majCoordoCentre(balle));
             listeBalle.forEach((Balle)->balle.majListePointSphere(balle));
+
+            //on affiche la barre
+            barre.dessiner(dessin);
             // on affiche la(les) balle(s)
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
@@ -118,12 +143,27 @@ public class Fenetre extends JFrame implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+        // selon la fleche directionnelle enfoncée, on initialise le booléen correspondant à true
+        //en utilisant le booléen pour controler le déplacement de la barre, on suprime l'impact de la répétition des touches
+        // enfoncées sur la fluidité du déplacement de la barre.
+        if(e.getKeyCode()==KeyEvent.VK_LEFT){
+            flecheGauche=true;
+        }
+        if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+            flecheDroite=true;
+        }
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        // une fois la touche relachée, le booléen repasse à false et la barre ne se déplace plus
+        if(e.getKeyCode()==KeyEvent.VK_LEFT){
+            flecheGauche=false;
+        }
+        if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+            flecheDroite=false;
+        }
 
     }
 

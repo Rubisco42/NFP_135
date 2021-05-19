@@ -20,8 +20,8 @@ public class Balle extends Sphere{
     private int vitesseVerticale;
 
     // les champs suivants correspondent à la positon initale de la balle (début de partie, création d'un nouvelle balle)
-    private int positionInitaleX=250;
-    private int positionInitialeY=450;
+    private int positionInitaleX;
+    private int positionInitialeY;
 
 
 
