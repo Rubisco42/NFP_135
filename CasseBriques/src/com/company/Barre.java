@@ -22,12 +22,10 @@ public class Barre extends RectangleCB{
         setHauteur(10);
         setMilieuX(250);
         setMilieuY(482);
-        setVitesse(6);
+        setVitesse(2);
     }
 
-    // méthode pour dessiner la barre:
-
-
+    // méthode pour dessiner la barre et délimiter sa médiane:
     @Override
     public void dessiner(Graphics2D dessin) {
         dessin.setColor(Color.CYAN);
