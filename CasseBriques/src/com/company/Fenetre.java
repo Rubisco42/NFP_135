@@ -71,10 +71,10 @@ public class Fenetre extends JFrame implements KeyListener{
             dessin.fillRect(0,0,500,40);
             // bordure gauche:
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(0,0,5,490);
+            dessin.fillRect(0,0,10,490);
             // bordure droite
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(497,0,5,490);
+            dessin.fillRect(490,0,10,490);
             // bordure bas
             //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient(ralenti le jeu)
             for(int i=0;i<501;i++) {
@@ -136,7 +136,7 @@ public class Fenetre extends JFrame implements KeyListener{
             try{
                 // thread=processus actuel
                 // on defini la fréquence de rafraichissement en incluant une pause dans l'execution de la boucle
-                Thread.sleep(1000/90);
+                Thread.sleep(1000/165);
             }catch(Exception e){
 
             }

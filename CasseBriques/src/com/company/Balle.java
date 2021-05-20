@@ -22,9 +22,6 @@ public class Balle extends Sphere{
     // les champs suivants correspondent à la positon initale de la balle (début de partie, création d'un nouvelle balle)
     private int positionInitaleX;
     private int positionInitialeY;
-    private boolean collision;
-
-
 
     // le constructeur de la classe balle,fait apparaitre la balle au milieu de la batte :
     public Balle(Barre barre) {
@@ -64,17 +61,15 @@ public class Balle extends Sphere{
 
     // on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
     public void collisionDroite(){
-        if(getPositionX()>=487) {
+        if(getPositionX()>=480) {
             inverseVitesseHorizontale();
-            setCollision(false);
         }
     }
 
     // on inverse la vitesse horizontale en cas de colision avec la paroie gauche de la fenetre:
     public void collisionGauche(){
-        if(getPositionX()<=5){
+        if(getPositionX()<=10){
             inverseVitesseHorizontale();
-            setCollision(false);
         }
     }
 
@@ -82,7 +77,6 @@ public class Balle extends Sphere{
     public void collisionHaut(){
         if (getPositionY()<=40){
             inverseVitesseVerticale();
-            setCollision(false);
         }
     }
 
@@ -97,54 +91,33 @@ public class Balle extends Sphere{
     public void collisionBarreHaut(Barre barre,Balle balle){
         int balleX, balleY;
         int barreX, barreY;
-        if(collision==false){
-            for(int i=0;i<balle.getListePointSphere().size();i++){
-                balleX=balle.getListePointSphere().get(i).getPointX();
-                balleY=balle.getListePointSphere().get(i).getPointY();
-                for(int j=0;j<barre.getCoteHaut().size(); j++){
-                    barreX=barre.getCoteHaut().get(j).getPointX();
-                    //barreY=barre.getCoteHaut().get(j).getPointY();
-                    if((balleX==barreX)&&(balleY==482)){
-                        // on modifie la direction de la balle selon la zone de la barre touchée
+        for(int i=0;i<balle.getListePointSphere().size();i++){
+            balleX=balle.getListePointSphere().get(i).getPointX();
+            balleY=balle.getListePointSphere().get(i).getPointY();
+            for(int j=0;j<barre.getCoteHaut().size(); j++){
+                barreX=barre.getCoteHaut().get(j).getPointX();
+                barreY=barre.getCoteHaut().get(j).getPointY();
+                if((balleX==barreX)&&(balleY==barreY)){
+                    // on modifie la direction de la balle selon la zone de la barre touchée
 
-                        if(balle.getVitesseHorizontale()<0){
-                            if(balleX<barre.getMilieuX()){
-                                System.out.println(balle.getVitesseVerticale());
-                                balle.inverseVitesseVerticale();
-                                System.out.println(balle.getVitesseVerticale());
-                                System.out.println("1");
-                                setCollision(true);
-                            }else if(balleX>barre.getMilieuX()){
-                                System.out.println(balle.getVitesseVerticale());
-                                balle.inverseVitesseVerticale();
-                                balle.inverseVitesseHorizontale();
-                                System.out.println(balle.getVitesseVerticale());
-                                System.out.println("4");
-                                setCollision(true);
-                            }
-                        }else if(balle.getVitesseHorizontale()>0){
-                            if(balleX<barre.getMilieuX()){
-                                System.out.println(balle.getVitesseVerticale());
-                                balle.inverseVitesseVerticale();
-                                balle.inverseVitesseHorizontale();
-                                System.out.println(balle.getVitesseVerticale());
-                                System.out.println("2");
-                                setCollision(true);
-                            }else if(balleX>barre.getMilieuX()){
-                                System.out.println(balle.getVitesseVerticale());
-                                balle.inverseVitesseVerticale();
-                                System.out.println(balle.getVitesseVerticale());
-                                System.out.println("3");
-                                setCollision(true);
-
-                            }
+                    if(balle.getVitesseHorizontale()<0){
+                        if(balleX<barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
+                        }else if(balleX>barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
+                            balle.inverseVitesseHorizontale();
+                        }
+                    }else if(balle.getVitesseHorizontale()>0){
+                        if(balleX<barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
+                            balle.inverseVitesseHorizontale();
+                        }else if(balleX>barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
                         }
                     }
                 }
             }
         }
-
-
     }
 
     // accesseurs pour la positon initiale et les vitesses:
@@ -181,11 +154,5 @@ public class Balle extends Sphere{
         this.vitesseVerticale = vitesseVerticale;
     }
 
-    public boolean isCollision() {
-        return collision;
-    }
 
-    public void setCollision(boolean collision) {
-        this.collision = collision;
-    }
 }

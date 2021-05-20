@@ -34,13 +34,13 @@ public class Barre extends RectangleCB{
 
     // les methodes de déplacement de la barre, en évitant que la barre ne traverse les paroies latérales:
     public void deplacementGauche(){
-        if(getPositionX()>5){
+        if(getPositionX()>10){
             setPositionX(getPositionX()-getVitesse());
         }
     }
 
     public void deplacementDroite(){
-        if(getPositionX()<(495-getLargeur())){
+        if(getPositionX()<(490-getLargeur())){
             setPositionX(getPositionX()+getVitesse());
         }
     }
