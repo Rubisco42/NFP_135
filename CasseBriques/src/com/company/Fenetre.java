@@ -88,17 +88,17 @@ public class Fenetre extends JFrame implements KeyListener{
             // On implémente les méthodes qui permettront le déplacement fluide de la barre:
             if(flecheGauche==true){
                 barre.deplacementGauche();
-                barre.modifMilieu();
-                barre.majCoteHaut();
-                barre.majCoteGauche();
-                barre.majCoteDroit();
             }else if (flecheDroite==true){
                 barre.deplacementDroite();
-                barre.modifMilieu();
-                barre.majCoteHaut();
-                barre.majCoteGauche();
-                barre.majCoteDroit();
             }
+
+            // maj des arraylistes de points de coté de la barre
+            barre.modifMilieu(barre);
+            barre.majCoteHaut(barre);
+            barre.majCoteGauche(barre);
+            barre.majCoteDroit(barre);
+
+
 
             // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran:
             balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
@@ -114,11 +114,17 @@ public class Fenetre extends JFrame implements KeyListener{
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
+
+
             // gestion des collision de la balle avec les paroies de l'environnement.
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());
             listeBalle.forEach((Balle)->balle.collisionHaut());
             listeBalle.forEach((Balle)->balle.collisionBas());
+
+            // gestion de la collision de la balle avec la barre
+            listeBalle.forEach((Balle)->balle.collisionBarreHaut(barre,balle));
+
             //System.out.println(balle.getPositionCentreX());
             //System.out.println(balle.getPositionCentreY());
             //System.out.println(balle.getListePointSphere().get(6).getPointX());

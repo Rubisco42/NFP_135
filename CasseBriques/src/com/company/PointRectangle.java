@@ -1,5 +1,7 @@
 package com.company;
 
+import java.awt.*;
+
 public class PointRectangle extends RectangleCB {
 //  champs correspondant aux coordonnées X et Y de chaque point du périmètre du rectangle:
     int pointX;
@@ -22,6 +24,10 @@ public class PointRectangle extends RectangleCB {
 
     public void setPointY(int pointY) {
         this.pointY = pointY;
+    }
+    public void dessinerPointRect(Graphics2D dessin){
+        dessin.setColor(Color.BLUE);
+        dessin.fillRect(getPointX(),getPointY(),1,1);
     }
 }
 

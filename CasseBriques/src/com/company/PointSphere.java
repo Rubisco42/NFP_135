@@ -35,7 +35,7 @@ public class PointSphere extends Sphere{
     //méthode pour dessiner le point, utilisée dans une autre méthode de la classe Sphere:
     public void dessinerPointSphere(Graphics2D dessin){
         dessin.setColor(Color.BLUE);
-        dessin.fillRect(getPointX(),getPointY(),1,1);
+        dessin.fillRect(getPointX(),getPointY(),4,4);
     }
 }
 
