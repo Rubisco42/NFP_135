@@ -10,6 +10,10 @@ public class Barre extends RectangleCB{
     // de(s) la(les) balle(s)
     int milieuX;
     int milieuY;
+    int milieuGX;
+    int milieuGY;
+    int milieuDX;
+    int milieuDY;
 
     public Barre() {
         setPositionX(220);
@@ -112,10 +116,21 @@ public class Barre extends RectangleCB{
             barre.getCoteDroit().get(i).setPointY(barre.getPositionY()+i);
         }
     }
-    // methode pour modifier la position du milieu du coté supérieur
-    public void modifMilieu(Barre barre){
+    // methodes pour modifier la position du milieu du coté supérieur
+    public void modifMilieuHaut(Barre barre){
         barre.setMilieuX(barre.getPositionX()+(barre.getLargeur()/2));
     }
+
+    public void modifMilieuGauche(Barre barre){
+        barre.setMilieuGX(barre.getPositionX());
+        barre.setMilieuGY(barre.getPositionY()+(barre.getHauteur()/2));
+    }
+
+    public void modifMilieuDroit(Barre barre){
+        barre.setMilieuDX(barre.getPositionX()+(barre.getLargeur()));
+        barre.setMilieuDY(barre.getPositionY()+(barre.getHauteur()/2));
+    }
+
 
 
 
@@ -132,6 +147,22 @@ public class Barre extends RectangleCB{
         return milieuY;
     }
 
+    public int getMilieuGX() {
+        return milieuGX;
+    }
+
+    public int getMilieuGY() {
+        return milieuGY;
+    }
+
+    public int getMilieuDX() {
+        return milieuDX;
+    }
+
+    public int getMilieuDY() {
+        return milieuDY;
+    }
+
     public void setVitesse(int vitesse) {
         this.vitesse = vitesse;
     }
@@ -142,6 +173,22 @@ public class Barre extends RectangleCB{
 
     public void setMilieuY(int milieuY) {
         this.milieuY = milieuY;
+    }
+
+    public void setMilieuGX(int milieuGX) {
+        this.milieuGX = milieuGX;
+    }
+
+    public void setMilieuGY(int milieuGY) {
+        this.milieuGY = milieuGY;
+    }
+
+    public void setMilieuDX(int milieuDX) {
+        this.milieuDX = milieuDX;
+    }
+
+    public void setMilieuDY(int milieuDY) {
+        this.milieuDY = milieuDY;
     }
 }
 

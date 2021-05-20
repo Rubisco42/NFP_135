@@ -92,8 +92,10 @@ public class Fenetre extends JFrame implements KeyListener{
                 barre.deplacementDroite();
             }
 
-            // maj des arraylistes de points de coté de la barre
-            barre.modifMilieu(barre);
+            // maj des arraylistes de points et des centre de chaque coté de la barre potentiellement en contact avec la balle
+            barre.modifMilieuHaut(barre);
+            barre.modifMilieuGauche(barre);
+            barre.modifMilieuDroit(barre);
             barre.majCoteHaut(barre);
             barre.majCoteGauche(barre);
             barre.majCoteDroit(barre);
@@ -124,6 +126,8 @@ public class Fenetre extends JFrame implements KeyListener{
 
             // gestion de la collision de la balle avec la barre
             listeBalle.forEach((Balle)->balle.collisionBarreHaut(barre,balle));
+            listeBalle.forEach((Balle)->balle.collisionBarreGauche(barre,balle));
+            listeBalle.forEach((Balle)->balle.collisionBarreDroit(barre,balle));
 
             //System.out.println(balle.getPositionCentreX());
             //System.out.println(balle.getPositionCentreY());

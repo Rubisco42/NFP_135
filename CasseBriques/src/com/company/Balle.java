@@ -87,7 +87,7 @@ public class Balle extends Sphere{
         }
     }
 
-    // methode pour gérer la collision de la balle avec le coté supérieur de la barre
+    // méthode pour gérer la collision de la balle avec le coté supérieur de la barre
     public void collisionBarreHaut(Barre barre,Balle balle){
         int balleX, balleY;
         int barreX, barreY;
@@ -114,6 +114,62 @@ public class Balle extends Sphere{
                         }else if(balleX>barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    // méthode pour gérer la collision de la balle avec le coté gauche de la barre,permet eventuellement de rattraper
+    // la balle, dans une certaine mesure
+    public void collisionBarreGauche(Barre barre,Balle balle){
+        int balleX, balleY;
+        int barreX, barreY;
+        for(int i=0;i<balle.getListePointSphere().size();i++){
+            balleX=balle.getListePointSphere().get(i).getPointX();
+            balleY=balle.getListePointSphere().get(i).getPointY();
+            for(int j=0;j<barre.getCoteGauche().size(); j++){
+                barreX=barre.getCoteGauche().get(j).getPointX();
+                barreY=barre.getCoteGauche().get(j).getPointY();
+                if((balleX==barreX)&&(balleY==barreY)){
+                    // on modifie la direction de la balle selon la zone de la barre touchée
+                    if(balleY<barre.getMilieuGY()){
+                        if(balle.getVitesseHorizontale()<0) {
+                            balle.inverseVitesseVerticale();
+                        }else if(balle.getVitesseHorizontale()>0) {
+                            balle.inverseVitesseVerticale();
+                            balle.inverseVitesseHorizontale();
+                        }
+                    }else{
+                        inverseVitesseHorizontale();
+                    }
+                }
+            }
+        }
+    }
+
+    // méthode pour gérer la collision de la balle avec le coté gauche de la barre,permet eventuellement de rattraper
+    // la balle, dans une certaine mesure
+    public void collisionBarreDroit(Barre barre,Balle balle){
+        int balleX, balleY;
+        int barreX, barreY;
+        for(int i=0;i<balle.getListePointSphere().size();i++){
+            balleX=balle.getListePointSphere().get(i).getPointX();
+            balleY=balle.getListePointSphere().get(i).getPointY();
+            for(int j=0;j<barre.getCoteDroit().size(); j++){
+                barreX=barre.getCoteDroit().get(j).getPointX();
+                barreY=barre.getCoteDroit().get(j).getPointY();
+                if((balleX==barreX)&&(balleY==barreY)){
+                    // on modifie la direction de la balle selon la zone de la barre touchée
+                    if(balleY<barre.getMilieuDY()){
+                        if(balle.getVitesseHorizontale()<0) {
+                            balle.inverseVitesseVerticale();
+                            balle.inverseVitesseHorizontale();
+                        }else if(balle.getVitesseHorizontale()>0) {
+                            balle.inverseVitesseVerticale();
+                        }
+                    }else{
+                        inverseVitesseHorizontale();
                     }
                 }
             }
