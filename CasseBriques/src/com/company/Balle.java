@@ -75,7 +75,7 @@ public class Balle extends Sphere{
 
     // on inverse la vitesse verticale en cas de colision avec la paroie supérieure de la fenetre:
     public void collisionHaut(){
-        if (getPositionY()<=40){
+        if (getPositionY()<=60){
             inverseVitesseVerticale();
         }
     }

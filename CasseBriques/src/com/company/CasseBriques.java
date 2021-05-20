@@ -89,7 +89,7 @@ public class CasseBriques extends JFrame implements KeyListener{
             dessin.fillRect(0,0,10,490);
             // bordure droite
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(490,0,10,490);
+            dessin.fillRect(491,0,10,490);
             // bordure bas
             //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient(ralenti le jeu)
             for(int i=0;i<501;i++) {

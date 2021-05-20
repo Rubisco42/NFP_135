@@ -28,7 +28,7 @@ public class Briques extends RectangleCB{
             }else if(resistance==2){
                 dessin.setColor(Color.BLUE);
             }else if(resistance==3){
-                dessin.setColor(Color.RED);
+                dessin.setColor(Color.ORANGE);
             }
             super.dessiner(dessin);
         }
