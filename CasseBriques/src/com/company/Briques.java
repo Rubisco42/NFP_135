@@ -17,9 +17,7 @@ public class Briques extends RectangleCB{
         setHauteur(30);
     }
 
-    // methode pour dessiner les briques en fonction de leur ressitance
-
-
+    // methode pour dessiner les briques en fonction de leur resistance
     @Override
     public void dessiner(Graphics2D dessin) {
         if(estdetruite==false){
@@ -36,10 +34,12 @@ public class Briques extends RectangleCB{
 
     // methode pour générer aléatoirement la valeur de resistance (soit le nombre de touches nécessaires pour détruire la brique
     public void generationResistance(){
+        //avec ces bornes, la resistance varir bien de 1 à 3.
         int min=1;
         int max=4;
 
-        int alea = (int)(Math.random()*(max-min))+min;
+        int alea = (int)(Math.random()*(max-min))+min;//la fonction math.random utilise des floats, on ajoute le minimum
+        //pour que le cast (int) arrondisse à l'entier supérieur.
         setResistance(alea);
     }
 

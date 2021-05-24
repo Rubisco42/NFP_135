@@ -86,13 +86,14 @@ public class CasseBriques extends JFrame implements KeyListener{
             dessin.fillRect(0,0,500,60);
             // bordure gauche:
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(0,0,10,490);
+            dessin.fillRect(0,0,10,500);
             // bordure droite
             dessin.setColor(Color.DARK_GRAY);
-            dessin.fillRect(491,0,10,490);
+            dessin.fillRect(490,0,10,500);
             // bordure bas
-            //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient(ralenti le jeu)
-            for(int i=0;i<501;i++) {
+            //on utilise une boucle pour afficher tous les rectangles avec les bonnes cordonnées de gradient
+            // (ralenti le jeu sous ma distro GNU/Linux, aucun pb sous window)
+            for(int i=10;i<490;i++) {
                 dessin.setPaint(bordureBas.get(i));
                 dessin.fillRect(i, 490, 1, 10);
             }
@@ -158,12 +159,30 @@ public class CasseBriques extends JFrame implements KeyListener{
             listeBalle.forEach((Balle)->balle.dessiner(dessin));
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
+            //gestion de la collision avec les briques:
+            // avec le côté supérieur:
+            for(int i =0; i<balle.getListePointSphere().size();i++){
+                for(int j=0;j<listeBriques.size();j++){
+                    for(int k=0;k<listeBriques.get(j).getCoteHaut().size();k++){
+                        if(listeBriques.get(j).isEstdetruite()==false){
+                            int balleX=balle.getListePointSphere().get(i).getPointX();
+                            int balleY=balle.getListePointSphere().get(i).getPointY();
+                            int briqueX=listeBriques.get(j).getCoteHaut().get(k).getPointX();
+                            int briqueY=listeBriques.get(j).getCoteHaut().get(k).getPointY();
+                            int resistanceBrique=listeBriques.get(j).getResistance();
 
+                            if((balleX==briqueX)&&(balleY==briqueY)){
+                                if(resistanceBrique<1){
+                                    listeBriques.get(j).setEstdetruite(true);
 
-
-
-
-
+                                }else{
+                                    listeBriques.get(j).setResistance(resistanceBrique-1);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             // gestion des collision de la balle avec les paroies de l'environnement.
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());
@@ -186,7 +205,8 @@ public class CasseBriques extends JFrame implements KeyListener{
             try{
                 // thread=processus actuel
                 // on defini la fréquence de rafraichissement en incluant une pause dans l'execution de la boucle
-                Thread.sleep(1000/165);
+                Thread.sleep(1000/165);// j'ai joué sur ce paramètre pour que le jeu soit plus dynamique à cause
+                //de la méthode de gestion des collisions (barre/briques) implémentée.
             }catch(Exception e){
 
             }

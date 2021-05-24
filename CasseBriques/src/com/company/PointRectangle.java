@@ -10,6 +10,7 @@ public class PointRectangle extends RectangleCB {
     public PointRectangle() {
     }
 
+    // accesseurs de la classe PointRectangle
     public int getPointX() {
         return pointX;
     }
@@ -25,6 +26,8 @@ public class PointRectangle extends RectangleCB {
     public void setPointY(int pointY) {
         this.pointY = pointY;
     }
+
+    //methode pour dessiner les points des cotés des rectangles si besoin
     public void dessinerPointRect(Graphics2D dessin){
         dessin.setColor(Color.BLUE);
         dessin.fillRect(getPointX(),getPointY(),1,1);

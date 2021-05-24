@@ -25,15 +25,15 @@ public class Balle extends Sphere{
 
     // le constructeur de la classe balle,fait apparaitre la balle au milieu de la batte :
     public Balle(Barre barre) {
-        setPositionX(barre.getMilieuX()-5);
-        setPositionY(barre.getMilieuY()-10);
+        setPositionX(barre.getMilieuX()-5); // on soustrait le rayon pour que le milieu de la balle match le milieu de la barre
+        setPositionY(barre.getMilieuY()-10); //on soustrait le diamètre pour que la balle soit sur la barre.
         setLargeur(10);
         setHauteur(10);
         setRayon(5);
         setPositionCentreX();
         setPositionCentreY();
-        setVitesseHorizontale(-1);
-        setVitesseVerticale(-2);
+        setVitesseHorizontale(-1);//il y a une limite à ma méthode de gestion des collisions (barre/briques): ne fonctionne
+        setVitesseVerticale(-2);//plus avec des vitesses supérieures.
     }
 
     // on précise la méthode pour dessiner une balle

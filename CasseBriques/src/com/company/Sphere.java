@@ -32,6 +32,8 @@ abstract class Sphere extends Sprite {
     private double angle;
 
     // on stock toutes les instances de Point dans un ArrayList, pour y accéder ultérieurement via leur index:
+    // c'est la position  de ces points permettra de gérer les collisions (briques/barres) avec le périmètre de la balle
+    // et non son centre.
     private ArrayList<PointSphere> listePointSphere =new ArrayList<>();
 
     // constructeur vide, sera précisé dans la classe balle:
