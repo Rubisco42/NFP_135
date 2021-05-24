@@ -138,6 +138,8 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                        }else if(balleX==barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
                         }
                     }else if(balle.getVitesseHorizontale()>0){
                         if(balleX<barre.getMilieuX()){
@@ -153,6 +155,8 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                        }else if(balleX==barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
                         }
                     }
                 }
