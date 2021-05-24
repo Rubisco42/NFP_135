@@ -19,6 +19,9 @@ public class CasseBriques extends JFrame implements KeyListener{
     private ArrayList<Briques>listeBriques=new ArrayList<>();
     // on passe la variable brique en variable générale
 
+    //on initialise l'instance d'Attributs attributs ici pour qu'elle soit visible des keylisteners
+    Attributs attributs=null;
+
 
     public CasseBriques(){
         setSize(500,500);
@@ -71,7 +74,7 @@ public class CasseBriques extends JFrame implements KeyListener{
         }
 
         //on initialise les différents champs de la classe attributs
-        Attributs attributs=null;
+
         attributs=new Attributs();
         // on prepare le remplissage de rectangle avec un gradient de couleur, il est necessaire d'avoir toutes les
         // coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie sous ma distro
@@ -140,13 +143,23 @@ public class CasseBriques extends JFrame implements KeyListener{
 
 
 
-            // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran:
-            balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
-            balle.setPositionX(balle.getPositionX()+balle.getVitesseHorizontale());
+            // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran
+            //en fonction de l'état de la partie (debut ou en cours de jeu)
+
+            if(attributs.isStart()==false){//la balle reste sur le milieu de la barre
+                balle.setPositionX(barre.getMilieuX()-5);
+                balle.setPositionY(barre.getMilieuY()-10);
+            }else if((attributs.isLancement()==false)&&(attributs.isStart()==true)){
+                balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
+            }else{
+                balle.setPositionY(balle.getPositionY()+balle.getVitesseVerticale());
+                balle.setPositionX(balle.getPositionX()+balle.getVitesseHorizontale());
+            }
+
 
             // on met à jour les psoition du centre de la (les) balle(s) pour pouvoir mettre à jour les points du périmetre
-            listeBalle.forEach((Balle)-> balle.majCoordoCentre(balle));
-            listeBalle.forEach((Balle)->balle.majListePointSphere(balle));
+            balle.majCoordoCentre(balle);
+            balle.majListePointSphere(balle);
 
             // on affiche les briques qui n'ont pas été détruites
             for(int i=0; i<listeBriques.size();i++){
@@ -230,6 +243,8 @@ public class CasseBriques extends JFrame implements KeyListener{
                                 balle.setCollisionBriqueHaut(false);
                                 balle.setCollisionBriqueGauche(false);
                                 balle.setCollisionBriqueDroite(false);
+                                attributs.setLancement(true);// pour avoir des direction differente entre le lancement
+                                //de la partie et le jeu en cours.
                                 if(getListeBriques().get(j).getResistance()==0){
                                     getListeBriques().get(j).setEstdetruite(true);
                                 }
@@ -335,6 +350,9 @@ public class CasseBriques extends JFrame implements KeyListener{
         }
         if(e.getKeyCode()==KeyEvent.VK_RIGHT){
             setFlecheDroite(true);
+        }
+        if(e.getKeyCode()==KeyEvent.VK_UP){
+            attributs.setStart(true);
         }
 
     }

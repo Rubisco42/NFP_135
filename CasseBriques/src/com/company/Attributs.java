@@ -17,7 +17,7 @@ public class Attributs {
         setBriquesDétruites(0);
         setScore(0);
         setGameOver(false);
-        setStart(true);
+        setStart(false);
         setTryAgain(false);
     }
 
@@ -43,6 +43,10 @@ public class Attributs {
 
     public boolean isLancement() {
         return lancement;
+    }
+
+    public boolean isRazBalle() {
+        return razBalle;
     }
 
     public boolean isTryAgain() {
@@ -71,6 +75,10 @@ public class Attributs {
 
     public void setLancement(boolean lancement) {
         this.lancement = lancement;
+    }
+
+    public void setRazBalle(boolean razBalle) {
+        this.razBalle = razBalle;
     }
 
     public void setTryAgain(boolean tryAgain) {
