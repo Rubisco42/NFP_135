@@ -24,6 +24,8 @@ abstract class RectangleCB extends Sprite{
     ArrayList<PointRectangle>coteGauche=new ArrayList<>();
     ArrayList<PointRectangle>coteDroit=new ArrayList<>();
 
+
+
     //constructeur qui sera précisé dans les classes filles
     public RectangleCB() {
     }

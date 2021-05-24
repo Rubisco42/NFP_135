@@ -15,6 +15,10 @@ public class Barre extends RectangleCB{
     int milieuDX;
     int milieuDY;
 
+    // cette variable n'a pour seul intérêt que d'apporter de la cohérence à la direction de la balle en de début de
+    //partie, après une première collision avec le bas d'une brique
+    int premiereCollision;
+
     public Barre() {
         setPositionX(220);
         setPositionY(482);
@@ -23,6 +27,7 @@ public class Barre extends RectangleCB{
         setMilieuX(250);
         setMilieuY(482);
         setVitesse(2);
+        setPremiereCollision(0);
     }
 
     // méthode pour dessiner la barre et délimiter sa médiane:
@@ -161,6 +166,10 @@ public class Barre extends RectangleCB{
         return milieuDY;
     }
 
+    public int getPremiereCollision() {
+        return premiereCollision;
+    }
+
     public void setVitesse(int vitesse) {
         this.vitesse = vitesse;
     }
@@ -187,6 +196,10 @@ public class Barre extends RectangleCB{
 
     public void setMilieuDY(int milieuDY) {
         this.milieuDY = milieuDY;
+    }
+
+    public void setPremiereCollision(int premiereCollision) {
+        this.premiereCollision = premiereCollision;
     }
 }
 

@@ -100,10 +100,13 @@ public class Balle extends Sphere{
         }
     }
 
-    // on modifie le nombre de vies si la balle tombe dans la lave:
-    public void collisionBas(Attributs attributs){
+    // on modifie le nombre de vies si la balle tombe dans la lave et la restart sur la barre:
+    public void collisionBas(Attributs attributs, Barre barre){
         if (getPositionY()>=490){
             attributs.setNbrVies(attributs.getNbrVies()-1);
+            attributs.setStart(false);
+            attributs.setLancement(false);
+            barre.setPremiereCollision(0);
             setCollisionBriqueHaut(false);
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
@@ -124,7 +127,20 @@ public class Balle extends Sphere{
                 if((balleX==barreX)&&(balleY==barreY)){
                     // on modifie la direction de la balle selon la zone de la barre touchée
 
-                    if(balle.getVitesseHorizontale()<0){
+                    if(barre.getPremiereCollision()==1) {
+                        if(balleX<barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
+                            barre.setPremiereCollision(barre.getPremiereCollision()+1);
+                        }else if(balleX>barre.getMilieuX()){
+                            balle.inverseVitesseVerticale();
+                            balle.inverseVitesseHorizontale();
+                            barre.setPremiereCollision(barre.getPremiereCollision()+1);
+                        }else if(balleX==barre.getMilieuX()){
+                        balle.inverseVitesseVerticale();
+                        //on ne modifie pas lma valeur de première collision,permet un tir vertical
+                            // tant que le centre de la barre est touché. Ne marche pas, sera corrigé plus tard
+                        }
+                    }else if(balle.getVitesseHorizontale()<0){
                         if(balleX<barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                             setCollisionBriqueHaut(false);

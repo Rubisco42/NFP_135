@@ -73,9 +73,10 @@ public class CasseBriques extends JFrame implements KeyListener{
 
         }
 
-        //on initialise les différents champs de la classe attributs
-
+        //on initialise les différents champs de la classe attributs en créant une instance d'Attributs
         attributs=new Attributs();
+
+
         // on prepare le remplissage de rectangle avec un gradient de couleur, il est necessaire d'avoir toutes les
         // coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie sous ma distro
         // de Gnu/linux.
@@ -145,6 +146,9 @@ public class CasseBriques extends JFrame implements KeyListener{
 
             // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran
             //en fonction de l'état de la partie (debut ou en cours de jeu)
+            if(barre.getPremiereCollision()==2){
+                attributs.setLancement(true);
+            }
 
             if(attributs.isStart()==false){//la balle reste sur le milieu de la barre
                 balle.setPositionX(barre.getMilieuX()-5);
@@ -243,8 +247,9 @@ public class CasseBriques extends JFrame implements KeyListener{
                                 balle.setCollisionBriqueHaut(false);
                                 balle.setCollisionBriqueGauche(false);
                                 balle.setCollisionBriqueDroite(false);
-                                attributs.setLancement(true);// pour avoir des direction differente entre le lancement
-                                //de la partie et le jeu en cours.
+                                if(barre.getPremiereCollision()==0){// pour avoir des direction differente entre le lancement
+                                    barre.setPremiereCollision(barre.getPremiereCollision()+1);//de la partie et le jeu en cours.
+                                }
                                 if(getListeBriques().get(j).getResistance()==0){
                                     getListeBriques().get(j).setEstdetruite(true);
                                 }
@@ -310,7 +315,7 @@ public class CasseBriques extends JFrame implements KeyListener{
             balle.collisionDroite();
             balle.collisionGauche();
             balle.collisionHaut();
-            balle.collisionBas(attributs);
+            balle.collisionBas(attributs, barre);
 
             // gestion de la collision de la balle avec la barre
             balle.collisionBarreHaut(barre,balle);
