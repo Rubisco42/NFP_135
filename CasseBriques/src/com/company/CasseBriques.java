@@ -228,7 +228,7 @@ public class CasseBriques extends JFrame implements KeyListener{
 
                             if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueGauche()==false){
                                 getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
-                                balle.inverseVitesseVerticale();
+                                balle.inverseVitesseHorizontale();
                                 balle.setCollisionBriqueGauche(true);
                                 balle.setCollisionBriqueBas(false);
                                 balle.setCollisionBriqueHaut(false);
@@ -254,7 +254,7 @@ public class CasseBriques extends JFrame implements KeyListener{
 
                             if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueDroite()==false){
                                 getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
-                                balle.inverseVitesseVerticale();
+                                balle.inverseVitesseHorizontale();
                                 balle.setCollisionBriqueDroite(true);
                                 balle.setCollisionBriqueBas(false);
                                 balle.setCollisionBriqueHaut(false);
