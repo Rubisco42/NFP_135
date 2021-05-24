@@ -8,9 +8,9 @@ public class Attributs {
     private int score;
     private boolean gameOver;
     private boolean lancement;
-    private boolean razBalle;// pour remettre la balle sur la barre si elle atteint la bordure du bas
     private boolean start;
     private boolean tryAgain;
+    private boolean victoire;
 
     public Attributs() {
         setNbrVies(3);
@@ -19,6 +19,7 @@ public class Attributs {
         setGameOver(false);
         setStart(false);
         setTryAgain(false);
+        setVictoire(false);
     }
 
     public int getNbrVies() {
@@ -45,12 +46,12 @@ public class Attributs {
         return lancement;
     }
 
-    public boolean isRazBalle() {
-        return razBalle;
-    }
-
     public boolean isTryAgain() {
         return tryAgain;
+    }
+
+    public boolean isVictoire() {
+        return victoire;
     }
 
     public void setNbrVies(int nbrVies) {
@@ -77,11 +78,11 @@ public class Attributs {
         this.lancement = lancement;
     }
 
-    public void setRazBalle(boolean razBalle) {
-        this.razBalle = razBalle;
-    }
-
     public void setTryAgain(boolean tryAgain) {
         this.tryAgain = tryAgain;
+    }
+
+    public void setVictoire(boolean victoire) {
+        this.victoire = victoire;
     }
 }

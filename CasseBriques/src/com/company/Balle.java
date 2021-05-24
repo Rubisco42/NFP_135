@@ -104,6 +104,8 @@ public class Balle extends Sphere{
     public void collisionBas(Attributs attributs, Barre barre){
         if (getPositionY()>=490){
             attributs.setNbrVies(attributs.getNbrVies()-1);
+            //on applique une pénalité de 500 points par balle perdue
+            attributs.setScore(attributs.getScore()-500);
             attributs.setStart(false);
             attributs.setLancement(false);
             barre.setPremiereCollision(0);
