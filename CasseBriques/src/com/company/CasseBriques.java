@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class CasseBriques extends JFrame implements KeyListener{
     // on initialise les booléens qui seront utilisés pour le déplacement de la barre
-    boolean flecheGauche=false;
-    boolean flecheDroite=false;
+    private boolean flecheGauche=false;
+    private boolean flecheDroite=false;
 
     // on initialise l'arraylist qui accueuillera les briques à détruire
-    ArrayList<Briques>listeBriques=new ArrayList<>();
+    private ArrayList<Briques>listeBriques=new ArrayList<>();
     // on passe la variable brique en variable générale
 
 
@@ -101,9 +101,9 @@ public class CasseBriques extends JFrame implements KeyListener{
             // tout le contenu à rafraichir:
 
             // On implémente les méthodes qui permettront le déplacement fluide de la barre:
-            if(flecheGauche==true){
+            if(isFlecheGauche()==true){
                 barre.deplacementGauche();
-            }else if (flecheDroite==true){
+            }else if (isFlecheDroite()==true){
                 barre.deplacementDroite();
             }
 
@@ -160,29 +160,114 @@ public class CasseBriques extends JFrame implements KeyListener{
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
             //gestion de la collision avec les briques:
-            // avec le côté supérieur:
+            // avec le côté supérieur de la brique:
             for(int i =0; i<balle.getListePointSphere().size();i++){
-                for(int j=0;j<listeBriques.size();j++){
-                    for(int k=0;k<listeBriques.get(j).getCoteHaut().size();k++){
-                        if(listeBriques.get(j).isEstdetruite()==false){
-                            int balleX=balle.getListePointSphere().get(i).getPointX();
-                            int balleY=balle.getListePointSphere().get(i).getPointY();
-                            int briqueX=listeBriques.get(j).getCoteHaut().get(k).getPointX();
-                            int briqueY=listeBriques.get(j).getCoteHaut().get(k).getPointY();
-                            int resistanceBrique=listeBriques.get(j).getResistance();
+                int balleX=balle.getListePointSphere().get(i).getPointX();
+                int balleY=balle.getListePointSphere().get(i).getPointY();
+                for(int j=0;j<getListeBriques().size();j++){
+                    for(int k=0;k<getListeBriques().get(j).getCoteHaut().size();k++){
+                        if(getListeBriques().get(j).isEstdetruite()==false){
+                            int briqueX=getListeBriques().get(j).getCoteHaut().get(k).getPointX();
+                            int briqueY=getListeBriques().get(j).getCoteHaut().get(k).getPointY();
 
-                            if((balleX==briqueX)&&(balleY==briqueY)){
-                                if(resistanceBrique<1){
-                                    listeBriques.get(j).setEstdetruite(true);
-
-                                }else{
-                                    listeBriques.get(j).setResistance(resistanceBrique-1);
+                            if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueHaut()==false){
+                                getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
+                                balle.inverseVitesseVerticale();
+                                //eviter les collisions multiples au sein de la boucle
+                                balle.setCollisionBriqueHaut(true);
+                                //on reset les autres booléens de cette catégorie à falsqe pour les rebonds de brique
+                                //à brique de la balle
+                                balle.setCollisionBriqueBas(false);
+                                balle.setCollisionBriqueGauche(false);
+                                balle.setCollisionBriqueDroite(false);
+                                // on détruit la brique si ça resistance atteint 0
+                                if(getListeBriques().get(j).getResistance()==0){
+                                    getListeBriques().get(j).setEstdetruite(true);
                                 }
                             }
                         }
                     }
                 }
             }
+
+            // avec le côté inférieur:
+            for(int i =0; i<balle.getListePointSphere().size();i++){
+                int balleX=balle.getListePointSphere().get(i).getPointX();
+                int balleY=balle.getListePointSphere().get(i).getPointY();
+                for(int j=0;j<getListeBriques().size();j++){
+                    if(getListeBriques().get(j).isEstdetruite()==false){
+                        for(int k=0;k<getListeBriques().get(j).getCoteBas().size();k++){
+                            int briqueX=getListeBriques().get(j).getCoteBas().get(k).getPointX();
+                            int briqueY=getListeBriques().get(j).getCoteBas().get(k).getPointY();
+
+                            if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueBas()==false){
+                                getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
+                                balle.inverseVitesseVerticale();
+                                balle.setCollisionBriqueBas(true);
+                                balle.setCollisionBriqueHaut(false);
+                                balle.setCollisionBriqueGauche(false);
+                                balle.setCollisionBriqueDroite(false);
+                                if(getListeBriques().get(j).getResistance()==0){
+                                    getListeBriques().get(j).setEstdetruite(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // avec le côté gauche:
+            for(int i =0; i<balle.getListePointSphere().size();i++){
+                int balleX=balle.getListePointSphere().get(i).getPointX();
+                int balleY=balle.getListePointSphere().get(i).getPointY();
+                for(int j=0;j<getListeBriques().size();j++){
+                    if(getListeBriques().get(j).isEstdetruite()==false){
+                        for(int k=0;k<getListeBriques().get(j).getCoteGauche().size();k++){
+                            int briqueX=getListeBriques().get(j).getCoteGauche().get(k).getPointX();
+                            int briqueY=getListeBriques().get(j).getCoteGauche().get(k).getPointY();
+
+                            if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueGauche()==false){
+                                getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
+                                balle.inverseVitesseVerticale();
+                                balle.setCollisionBriqueGauche(true);
+                                balle.setCollisionBriqueBas(false);
+                                balle.setCollisionBriqueHaut(false);
+                                balle.setCollisionBriqueDroite(false);
+                                if(getListeBriques().get(j).getResistance()==0){
+                                    getListeBriques().get(j).setEstdetruite(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // avec le côté droit:
+            for(int i =0; i<balle.getListePointSphere().size();i++){
+                int balleX=balle.getListePointSphere().get(i).getPointX();
+                int balleY=balle.getListePointSphere().get(i).getPointY();
+                for(int j=0;j<getListeBriques().size();j++){
+                    if(getListeBriques().get(j).isEstdetruite()==false){
+                        for(int k=0;k<getListeBriques().get(j).getCoteDroit().size();k++){
+                            int briqueX=getListeBriques().get(j).getCoteDroit().get(k).getPointX();
+                            int briqueY=getListeBriques().get(j).getCoteDroit().get(k).getPointY();
+
+                            if((balleX==briqueX)&&(balleY==briqueY)&&balle.isCollisionBriqueDroite()==false){
+                                getListeBriques().get(j).setResistance(getListeBriques().get(j).getResistance()-1);
+                                balle.inverseVitesseVerticale();
+                                balle.setCollisionBriqueDroite(true);
+                                balle.setCollisionBriqueBas(false);
+                                balle.setCollisionBriqueHaut(false);
+                                balle.setCollisionBriqueGauche(false);
+                                if(getListeBriques().get(j).getResistance()==0){
+                                    getListeBriques().get(j).setEstdetruite(true);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // gestion des collision de la balle avec les paroies de l'environnement.
             listeBalle.forEach((Balle)->balle.collisionDroite());
             listeBalle.forEach((Balle)->balle.collisionGauche());
@@ -223,10 +308,10 @@ public class CasseBriques extends JFrame implements KeyListener{
         //en utilisant le booléen pour controler le déplacement de la barre, on suprime l'impact de la répétition des touches
         // enfoncées sur la fluidité du déplacement de la barre.
         if(e.getKeyCode()==KeyEvent.VK_LEFT){
-            flecheGauche=true;
+            setFlecheGauche(true);
         }
         if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-            flecheDroite=true;
+            setFlecheDroite(true);
         }
 
     }
@@ -235,14 +320,36 @@ public class CasseBriques extends JFrame implements KeyListener{
     public void keyReleased(KeyEvent e) {
         // une fois la touche relachée, le booléen repasse à false et la barre ne se déplace plus
         if(e.getKeyCode()==KeyEvent.VK_LEFT){
-            flecheGauche=false;
+            setFlecheGauche(false);
         }
         if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-            flecheDroite=false;
+            setFlecheDroite(false);
         }
 
     }
 
+    // accesseurs pour la classe CasseBriques
+
+
+    public boolean isFlecheGauche() {
+        return flecheGauche;
+    }
+
+    public boolean isFlecheDroite() {
+        return flecheDroite;
+    }
+
+    public ArrayList<Briques> getListeBriques() {
+        return listeBriques;
+    }
+
+    public void setFlecheGauche(boolean flecheGauche) {
+        this.flecheGauche = flecheGauche;
+    }
+
+    public void setFlecheDroite(boolean flecheDroite) {
+        this.flecheDroite = flecheDroite;
+    }
 
     public static void main(String[] args) {
         new CasseBriques();

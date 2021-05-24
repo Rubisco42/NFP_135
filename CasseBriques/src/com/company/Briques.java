@@ -7,7 +7,7 @@ public class Briques extends RectangleCB{
     boolean estdetruite;
 
     // la resistance permettra de determiner si la brique à besoin de plusieurs touches pour est détruite
-    int resistance;
+    private int resistance;
 
     // constructeur
     public Briques() {
@@ -20,12 +20,12 @@ public class Briques extends RectangleCB{
     // methode pour dessiner les briques en fonction de leur resistance
     @Override
     public void dessiner(Graphics2D dessin) {
-        if(estdetruite==false){
-            if(resistance==1){
+        if(isEstdetruite()==false){
+            if(getResistance()==1){
                 dessin.setColor(Color.GREEN);
-            }else if(resistance==2){
+            }else if(getResistance()==2){
                 dessin.setColor(Color.BLUE);
-            }else if(resistance==3){
+            }else if(getResistance()==3){
                 dessin.setColor(Color.ORANGE);
             }
             super.dessiner(dessin);
