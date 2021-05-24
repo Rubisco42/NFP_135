@@ -1,15 +1,19 @@
 package com.company;
 
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import java.util.ArrayList;
 
 public class CasseBriques extends JFrame implements KeyListener{
     // on initialise les booléens qui seront utilisés pour le déplacement de la barre
     private boolean flecheGauche=false;
     private boolean flecheDroite=false;
+
 
     // on initialise l'arraylist qui accueuillera les briques à détruire
     private ArrayList<Briques>listeBriques=new ArrayList<>();
@@ -42,11 +46,12 @@ public class CasseBriques extends JFrame implements KeyListener{
         barre.remplirCoteDroit();
         barre.remplirCoteGauche();
 
+
         // on génère la barre
         Balle balle= new Balle(barre);
         balle.remplirlistePointSphere(balle);
 
-        //on cré un ArrayList qui permettra de gérer un affichage multiballe.
+        //on cré un ArrayList qui permettra de gérer un affichage multiballes.
         ArrayList<Balle> listeBalle = new ArrayList<>();
         listeBalle.add(balle);
 
@@ -64,6 +69,10 @@ public class CasseBriques extends JFrame implements KeyListener{
             }
 
         }
+
+        //on initialise les différents champs de la classe attributs
+        Attributs attributs=null;
+        attributs=new Attributs();
         // on prepare le remplissage de rectangle avec un gradient de couleur, il est necessaire d'avoir toutes les
         // coordonnées de gradient possibles. Sympa mais ralenti le jeu une fois dans la boucle infinie sous ma distro
         // de Gnu/linux.
@@ -84,6 +93,20 @@ public class CasseBriques extends JFrame implements KeyListener{
             // bordure haute (chez moi la balle rentre dans l'entête de la fenêtre)
             dessin.setColor(Color.DARK_GRAY);
             dessin.fillRect(0,0,500,60);
+            // on affiche le nombre de vies, le nombre de briques détruites et le score en haut de l'écran
+            dessin.setColor(Color.WHITE);
+            dessin.setFont(new Font("courier",Font.PLAIN,12));
+            dessin.drawString("Vie:",10,50);
+            if(attributs.getNbrVies()<=1){
+                dessin.setColor(Color.RED);
+            }else{
+                dessin.setColor(Color.GREEN);
+            }
+            dessin.setFont(new Font("courier",Font.BOLD,10));
+            dessin.drawString(String.valueOf(attributs.getNbrVies()),40,50);
+            dessin.setColor(Color.WHITE);
+            dessin.setFont(new Font("courier",Font.PLAIN,10));
+            dessin.drawString("Briques détruites:",55,50);
             // bordure gauche:
             dessin.setColor(Color.DARK_GRAY);
             dessin.fillRect(0,0,10,500);
@@ -132,13 +155,13 @@ public class CasseBriques extends JFrame implements KeyListener{
             // on affiche un cadrillage pour délimiter chaque brique
             dessin.setColor(Color.BLACK);
             dessin.setStroke(new BasicStroke(1.0f));
-            dessin.drawLine(10,60,490,60);
-            dessin.drawLine(10,90,490,90);
-            dessin.drawLine(10,120,490,120);
-            dessin.drawLine(10,120,490,120);
-            dessin.drawLine(10,150,490,150);
-            dessin.drawLine(10,180,490,180);
-            dessin.drawLine(10,210,490,210);
+            dessin.drawLine(10,60,489,60);
+            dessin.drawLine(10,90,489,90);
+            dessin.drawLine(10,120,489,120);
+            dessin.drawLine(10,120,489,120);
+            dessin.drawLine(10,150,489,150);
+            dessin.drawLine(10,180,489,180);
+            dessin.drawLine(10,210,489,210);
 
             dessin.drawLine(10,60,10,210);
             dessin.drawLine(58,60,58,210);
@@ -150,13 +173,13 @@ public class CasseBriques extends JFrame implements KeyListener{
             dessin.drawLine(346,60,346,210);
             dessin.drawLine(394,60,394,210);
             dessin.drawLine(442,60,442,210);
-            dessin.drawLine(490,60,490,210);
+            dessin.drawLine(489,60,489,210);
 
             //on affiche la barre
             barre.dessiner(dessin);
 
             // on affiche la(les) balle(s)
-            listeBalle.forEach((Balle)->balle.dessiner(dessin));
+            balle.dessiner(dessin);
             //listeBalle.forEach((Balle)->balle.afficherPointPerimetre(dessin, balle));
 
             //gestion de la collision avec les briques:
@@ -269,15 +292,15 @@ public class CasseBriques extends JFrame implements KeyListener{
             }
 
             // gestion des collision de la balle avec les paroies de l'environnement.
-            listeBalle.forEach((Balle)->balle.collisionDroite());
-            listeBalle.forEach((Balle)->balle.collisionGauche());
-            listeBalle.forEach((Balle)->balle.collisionHaut());
-            listeBalle.forEach((Balle)->balle.collisionBas());
+            balle.collisionDroite();
+            balle.collisionGauche();
+            balle.collisionHaut();
+            balle.collisionBas(attributs);
 
             // gestion de la collision de la balle avec la barre
-            listeBalle.forEach((Balle)->balle.collisionBarreHaut(barre,balle));
-            listeBalle.forEach((Balle)->balle.collisionBarreGauche(barre,balle));
-            listeBalle.forEach((Balle)->balle.collisionBarreDroit(barre,balle));
+            balle.collisionBarreHaut(barre,balle);
+            balle.collisionBarreGauche(barre,balle);
+            balle.collisionBarreDroit(barre,balle);
 
             //System.out.println(balle.getPositionCentreX());
             //System.out.println(balle.getPositionCentreY());
@@ -355,4 +378,5 @@ public class CasseBriques extends JFrame implements KeyListener{
         new CasseBriques();
 
     }
+
 }

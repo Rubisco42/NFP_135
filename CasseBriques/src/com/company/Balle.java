@@ -100,10 +100,10 @@ public class Balle extends Sphere{
         }
     }
 
-    // pour test à modifier pour perte vie/game over:
-    public void collisionBas(){
+    // on modifie le nombre de vies si la balle tombe dans la lave:
+    public void collisionBas(Attributs attributs){
         if (getPositionY()>=490){
-            inverseVitesseVerticale();
+            attributs.setNbrVies(attributs.getNbrVies()-1);
             setCollisionBriqueHaut(false);
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
@@ -309,4 +309,7 @@ public class Balle extends Sphere{
     public void setCollisionBriqueDroite(boolean collisionBriqueDroite) {
         this.collisionBriqueDroite = collisionBriqueDroite;
     }
+
+    //on implémenete les méthodes de l'interface
+
 }
