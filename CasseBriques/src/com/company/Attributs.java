@@ -16,26 +16,26 @@ public class Attributs {
     private boolean victoire;
 
     //on initialise les différentes variables d'interface Clip
-    Clip musiqueJeu;
-    Clip lancementBalle;
-    Clip collisionParoie;
-    Clip collisionBarre;
-    Clip collisionBrique;
-    Clip destructionBrique;
-    Clip lave;
-    Clip perdu;
-    Clip gagne;
+    private Clip musiqueJeu;
+    private Clip lancementBalle;
+    private Clip collisionParoie;
+    private Clip collisionBarre;
+    private Clip collisionBrique;
+    private Clip destructionBrique;
+    private Clip lave;
+    private Clip perdu;
+    private Clip gagne;
 
     //on stock tout les chemin pour les fichiers audio sources
-    String cheminmusique="src/com/company/sons/Brick Morty.wav";
-    String cheminParoie="src/com/company/sons/MUSCInst_Mbira note 1 (ID 2285)_LS.aiff";
-    String cheminLave="src/com/company/sons/VOXScrm_Cri wilhelm (ID 0477)_LS.aiff";
-    String cheminBarre="src/com/company/sons/MUSCInst_Mbira note 4 (ID 2288)_LS.aiff";
-    String cheminBrique="src/com/company/sons/MUSCInst_Mbira note 3 (ID 2287)_LS.aiff";
-    String cheminExplosion="src/com/company/sons/EXPLReal_Explosion 1 (ID 1807)_LS.aiff";
-    String cheminGameOver="src/com/company/sons/TOYElec_Docteur maboul 4 (ID 1685)_LS.aiff";
-    String cheminVictoire="src/com/company/sons/MUSCInst_Mbira note 5 (ID 2289)_LS.aiff";
-    String cheminLancement="src/com/company/sons/LASRGun_Blaster star wars 2 (ID 1758)_LS.aiff";
+    private String cheminmusique="src/com/company/sons/Brick Morty.wav";
+    private String cheminParoie="src/com/company/sons/MUSCInst_Mbira note 1 (ID 2285)_LS.aiff";
+    private String cheminLave="src/com/company/sons/VOXScrm_Cri wilhelm (ID 0477)_LS.aiff";
+    private String cheminBarre="src/com/company/sons/MUSCInst_Mbira note 4 (ID 2288)_LS.aiff";
+    private String cheminBrique="src/com/company/sons/MUSCInst_Mbira note 3 (ID 2287)_LS.aiff";
+    private String cheminExplosion="src/com/company/sons/EXPLReal_Explosion 1 (ID 1807)_LS.aiff";
+    private String cheminGameOver="src/com/company/sons/TOYElec_Docteur maboul 4 (ID 1685)_LS.aiff";
+    private String cheminVictoire="src/com/company/sons/MUSCInst_Mbira note 5 (ID 2289)_LS.aiff";
+    private String cheminLancement="src/com/company/sons/LASRGun_Blaster star wars 2 (ID 1758)_LS.aiff";
 
     public Attributs() {
         setNbrVies(3);
@@ -64,14 +64,14 @@ public class Attributs {
         //try catch obligatoire,imposé par la classe AudioInputStream. Permet de savoir si le fichier à bien été trouvé
 
         try{
-            File musique=new File(cheminmusique);//on indique le fichier source
+            File musique=new File(getCheminmusique());//on indique le fichier source
             AudioInputStream brickMorty= AudioSystem.getAudioInputStream(musique);//on cré une piste découpé en "frame"
             // (au lieu des secondes pour une écoute traditionnelle. On pourra accéder à n'importe quel frame du morceau
             //Le dernier frame lu est gardé en mémoire.La classe audiosystem permet d'accéder au système son de l'ordianteur
-            musiqueJeu =AudioSystem.getClip();// Clip est une interface qui permet de charger et de diffuser le morceau
+            setMusiqueJeu(AudioSystem.getClip());// Clip est une interface qui permet de charger et de diffuser le morceau
             //via le système son de l'ordinateur, en definissant sa durée. Ce qui permettra de naviguer dans le morceau,
             // de l'arrêter...
-            musiqueJeu.open(brickMorty);//
+            getMusiqueJeu().open(brickMorty);//
 
 
         } catch (UnsupportedAudioFileException e) {
@@ -87,10 +87,10 @@ public class Attributs {
     //preparation du choc avec les paroies
     public void chargementSonParoie(){
         try{
-            File paroie=new File(cheminParoie);
+            File paroie=new File(getCheminParoie());
             AudioInputStream chocParoie= AudioSystem.getAudioInputStream(paroie);
-            collisionParoie =AudioSystem.getClip();
-            collisionParoie.open(chocParoie);
+            setCollisionParoie(AudioSystem.getClip());
+            getCollisionParoie().open(chocParoie);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -103,10 +103,10 @@ public class Attributs {
     //preparation en cas de passage de la balle dans la bordure inférieure
     public void chargementSonLave(){
         try{
-            File perdVie=new File(cheminLave);
+            File perdVie=new File(getCheminLave());
             AudioInputStream chocLave= AudioSystem.getAudioInputStream(perdVie);
-            lave =AudioSystem.getClip();
-            lave.open(chocLave);
+            setLave(AudioSystem.getClip());
+            getLave().open(chocLave);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -119,10 +119,10 @@ public class Attributs {
     //preparation du choc avec la barre
     public void chargementSonBarre(){
         try{
-            File barre=new File(cheminBarre);
+            File barre=new File(getCheminBarre());
             AudioInputStream chocBarre= AudioSystem.getAudioInputStream(barre);
-            collisionBarre =AudioSystem.getClip();
-            collisionBarre.open(chocBarre);
+            setCollisionBarre(AudioSystem.getClip());
+            getCollisionBarre().open(chocBarre);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -135,10 +135,10 @@ public class Attributs {
     //preparation du choc avec les briques
     public void chargementSonBrique(){
         try{
-            File brique=new File(cheminBrique);
+            File brique=new File(getCheminBrique());
             AudioInputStream chocBrique= AudioSystem.getAudioInputStream(brique);
-            collisionBrique =AudioSystem.getClip();
-            collisionBrique.open(chocBrique);
+            setCollisionBrique(AudioSystem.getClip());
+            getCollisionBrique().open(chocBrique);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -151,10 +151,10 @@ public class Attributs {
     //preparation de la destruction des briques
     public void chargementExplosionBrique(){
         try{
-            File explosion=new File(cheminExplosion);
+            File explosion=new File(getCheminExplosion());
             AudioInputStream ExploBrique= AudioSystem.getAudioInputStream(explosion);
-            destructionBrique =AudioSystem.getClip();
-            destructionBrique.open(ExploBrique);
+            setDestructionBrique(AudioSystem.getClip());
+            getDestructionBrique().open(ExploBrique);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -167,10 +167,10 @@ public class Attributs {
     //preparation du game over
     public void chargementGameOver(){
         try{
-            File gameOver=new File(cheminGameOver);
+            File gameOver=new File(getCheminGameOver());
             AudioInputStream finPartie= AudioSystem.getAudioInputStream(gameOver);
-            perdu =AudioSystem.getClip();
-            perdu.open(finPartie);
+            setPerdu(AudioSystem.getClip());
+            getPerdu().open(finPartie);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -183,10 +183,10 @@ public class Attributs {
     //preparation de la victoire
     public void chargementVictoire(){
         try{
-            File victoire=new File(cheminVictoire);
+            File victoire=new File(getCheminVictoire());
             AudioInputStream partieGagne= AudioSystem.getAudioInputStream(victoire);
-            gagne =AudioSystem.getClip();
-            gagne.open(partieGagne);
+            setGagne(AudioSystem.getClip());
+            getGagne().open(partieGagne);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -199,10 +199,10 @@ public class Attributs {
     //preparation du premier lancement de balle
     public void chargementLancement(){
         try{
-            File lancement=new File(cheminLancement);
+            File lancement=new File(getCheminLancement());
             AudioInputStream sonLancement= AudioSystem.getAudioInputStream(lancement);
-            lancementBalle =AudioSystem.getClip();
-            lancementBalle.open(sonLancement);
+            setLancementBalle(AudioSystem.getClip());
+            getLancementBalle().open(sonLancement);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -214,46 +214,54 @@ public class Attributs {
 
     //methode pour lire la musique en boucle
     public void boucleMusicale(){
-        musiqueJeu.setFramePosition(0);//on part du début du morceau
-        musiqueJeu.loop(10000000);// repetition +++
+        getMusiqueJeu().setFramePosition(0);//on part du début du morceau
+        getMusiqueJeu().loop(10000000);// repetition +++
     }
 
     //on arrête la musique
     public void stopMusique(){
-        musiqueJeu.stop();
+        getMusiqueJeu().stop();
     }
 
     //lire les différents sons
     public void chocParoie(){
-        collisionParoie.start();
+        getCollisionParoie().setFramePosition(0);//on remet le son au début à chaque fois, si non la lecture démarre à la fin
+        getCollisionParoie().start();
     }
 
     public void bainLave(){
-        lave.start();
+        getLave().setFramePosition(0);
+        getLave().start();
     }
 
     public void chocBarre(){
-        collisionBarre.start();
+        getCollisionBarre().setFramePosition(0);
+        getCollisionBarre().start();
     }
 
     public void chocBrique(){
-        collisionBrique.start();
+        getCollisionBrique().setFramePosition(0);
+        getCollisionBrique().start();
     }
 
     public void destructionBrique(){
-        destructionBrique.start();
+        getDestructionBrique().setFramePosition(0);
+        getDestructionBrique().start();
     }
 
     public void gameOver(){
-        perdu.start();
+        getPerdu().setFramePosition(0);
+        getPerdu().start();
     }
 
     public void gagne(){
-        gagne.start();
+        getGagne().setFramePosition(0);
+        getGagne().start();
     }
 
     public void lancement(){
-        lancementBalle.start();
+        getLancementBalle().setFramePosition(0);
+        getLancementBalle().start();
     }
 
 
@@ -290,6 +298,78 @@ public class Attributs {
         return victoire;
     }
 
+    public String getCheminmusique() {
+        return cheminmusique;
+    }
+
+    public String getCheminParoie() {
+        return cheminParoie;
+    }
+
+    public String getCheminLave() {
+        return cheminLave;
+    }
+
+    public String getCheminBarre() {
+        return cheminBarre;
+    }
+
+    public String getCheminBrique() {
+        return cheminBrique;
+    }
+
+    public String getCheminExplosion() {
+        return cheminExplosion;
+    }
+
+    public String getCheminGameOver() {
+        return cheminGameOver;
+    }
+
+    public String getCheminVictoire() {
+        return cheminVictoire;
+    }
+
+    public String getCheminLancement() {
+        return cheminLancement;
+    }
+
+    public Clip getMusiqueJeu() {
+        return musiqueJeu;
+    }
+
+    public Clip getLancementBalle() {
+        return lancementBalle;
+    }
+
+    public Clip getCollisionParoie() {
+        return collisionParoie;
+    }
+
+    public Clip getCollisionBarre() {
+        return collisionBarre;
+    }
+
+    public Clip getCollisionBrique() {
+        return collisionBrique;
+    }
+
+    public Clip getDestructionBrique() {
+        return destructionBrique;
+    }
+
+    public Clip getLave() {
+        return lave;
+    }
+
+    public Clip getPerdu() {
+        return perdu;
+    }
+
+    public Clip getGagne() {
+        return gagne;
+    }
+
     public void setNbrVies(int nbrVies) {
         this.nbrVies = nbrVies;
     }
@@ -320,5 +400,77 @@ public class Attributs {
 
     public void setVictoire(boolean victoire) {
         this.victoire = victoire;
+    }
+
+    public void setMusiqueJeu(Clip musiqueJeu) {
+        this.musiqueJeu = musiqueJeu;
+    }
+
+    public void setLancementBalle(Clip lancementBalle) {
+        this.lancementBalle = lancementBalle;
+    }
+
+    public void setCollisionParoie(Clip collisionParoie) {
+        this.collisionParoie = collisionParoie;
+    }
+
+    public void setCollisionBarre(Clip collisionBarre) {
+        this.collisionBarre = collisionBarre;
+    }
+
+    public void setCollisionBrique(Clip collisionBrique) {
+        this.collisionBrique = collisionBrique;
+    }
+
+    public void setDestructionBrique(Clip destructionBrique) {
+        this.destructionBrique = destructionBrique;
+    }
+
+    public void setLave(Clip lave) {
+        this.lave = lave;
+    }
+
+    public void setPerdu(Clip perdu) {
+        this.perdu = perdu;
+    }
+
+    public void setGagne(Clip gagne) {
+        this.gagne = gagne;
+    }
+
+    public void setCheminmusique(String cheminmusique) {
+        this.cheminmusique = cheminmusique;
+    }
+
+    public void setCheminParoie(String cheminParoie) {
+        this.cheminParoie = cheminParoie;
+    }
+
+    public void setCheminLave(String cheminLave) {
+        this.cheminLave = cheminLave;
+    }
+
+    public void setCheminBarre(String cheminBarre) {
+        this.cheminBarre = cheminBarre;
+    }
+
+    public void setCheminBrique(String cheminBrique) {
+        this.cheminBrique = cheminBrique;
+    }
+
+    public void setCheminExplosion(String cheminExplosion) {
+        this.cheminExplosion = cheminExplosion;
+    }
+
+    public void setCheminGameOver(String cheminGameOver) {
+        this.cheminGameOver = cheminGameOver;
+    }
+
+    public void setCheminVictoire(String cheminVictoire) {
+        this.cheminVictoire = cheminVictoire;
+    }
+
+    public void setCheminLancement(String cheminLancement) {
+        this.cheminLancement = cheminLancement;
     }
 }
