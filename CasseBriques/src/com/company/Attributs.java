@@ -23,6 +23,14 @@ public class Attributs {
     Clip collisionBrique;
     Clip destructionBrique;
     Clip lave;
+    Clip perdu;
+
+    //on stock tout les chemin pour les fichiers audio sources
+    String cheminmusique="src/com/company/sons/Brick Morty.wav";
+    String cheminParoie="src/com/company/sons/MUSCInst_Mbira note 1 (ID 2285)_LS.aiff";
+    String cheminLave="src/com/company/sons/VOXScrm_Cri wilhelm (ID 0477)_LS.aiff";
+    String cheminBarre="src/com/company/sons/MUSCInst_Mbira note 4 (ID 2288)_LS.aiff";
+    String cheminBrique="src/com/company/sons/MUSCInst_Mbira note 3 (ID 2287)_LS.aiff";
 
     public Attributs() {
         setNbrVies(3);
@@ -33,13 +41,18 @@ public class Attributs {
         setTryAgain(false);
         setVictoire(false);
         chargementMusique();
+        chargementSonParoie();
+        chargementSonLave();
+        chargementSonBarre();
     }
 
     //gestion de l'audio:
-    //methode pour préparer la lecture du  fichier audio
+    //methodes pour préparer la lecture du  fichier audio
+
+    //preparation de la musique
     public void chargementMusique(){
         //try catch obligatoire,imposé par la classe AudioInputStream. Permet de savoir si le fichier à bien été trouvé
-        String cheminmusique="src/com/company/sons/Brick Morty.wav";
+
         try{
             File musique=new File(cheminmusique);//on indique le fichier source
             AudioInputStream brickMorty= AudioSystem.getAudioInputStream(musique);//on cré une piste découpé en "frame"
@@ -61,6 +74,70 @@ public class Attributs {
 
     }
 
+    //preparation du choc avec les paroies
+    public void chargementSonParoie(){
+        try{
+            File paroie=new File(cheminParoie);
+            AudioInputStream chocParoie= AudioSystem.getAudioInputStream(paroie);
+            collisionParoie =AudioSystem.getClip();
+            collisionParoie.open(chocParoie);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation en cas de passage de la balle dans la bordure inférieure
+    public void chargementSonLave(){
+        try{
+            File perdVie=new File(cheminLave);
+            AudioInputStream chocLave= AudioSystem.getAudioInputStream(perdVie);
+            lave =AudioSystem.getClip();
+            lave.open(chocLave);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation du choc avec la barre
+    public void chargementSonBarre(){
+        try{
+            File barre=new File(cheminBarre);
+            AudioInputStream chocBarre= AudioSystem.getAudioInputStream(barre);
+            collisionBarre =AudioSystem.getClip();
+            collisionBarre.open(chocBarre);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation du choc avec les briques
+    public void chargementSonBrique(){
+        try{
+            File brique=new File(cheminBrique);
+            AudioInputStream chocBrique= AudioSystem.getAudioInputStream(brique);
+            collisionBrique =AudioSystem.getClip();
+            collisionBrique.open(chocBrique);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
     //methode pour lire la musique en boucle
     public void boucleMusicale(){
         musiqueJeu.setFramePosition(0);//on part du début du morceau
@@ -71,6 +148,21 @@ public class Attributs {
     public void stopMusique(){
         musiqueJeu.stop();
     }
+
+    //lire les différents sons
+    public void chocParoie(){
+        collisionParoie.start();
+    }
+
+    public void bainLave(){
+        lave.start();
+    }
+
+    public void chocBarre(){
+        collisionBarre.start();
+    }
+
+
 
     public int getNbrVies() {
         return nbrVies;

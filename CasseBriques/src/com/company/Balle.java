@@ -68,35 +68,38 @@ public class Balle extends Sphere{
     }
 
     // on inverse la vitesse horizontale en cas de colision avec la paroie droite de la fenetre:
-    public void collisionDroite(){
+    public void collisionDroite(Attributs attributs){
         if(getPositionX()>=480) {
             inverseVitesseHorizontale();
             setCollisionBriqueHaut(false);
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
             setCollisionBriqueDroite(false);
+            attributs.chocParoie();
         }
     }
 
     // on inverse la vitesse horizontale en cas de colision avec la paroie gauche de la fenetre:
-    public void collisionGauche(){
+    public void collisionGauche(Attributs attributs){
         if(getPositionX()<=10){
             inverseVitesseHorizontale();
             setCollisionBriqueHaut(false);
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
             setCollisionBriqueDroite(false);
+            attributs.chocParoie();
         }
     }
 
     // on inverse la vitesse verticale en cas de colision avec la paroie supérieure de la fenetre:
-    public void collisionHaut(){
+    public void collisionHaut(Attributs attributs){
         if (getPositionY()<=60){
             inverseVitesseVerticale();
             setCollisionBriqueHaut(false);
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
             setCollisionBriqueDroite(false);
+            attributs.chocParoie();
         }
     }
 
@@ -113,11 +116,12 @@ public class Balle extends Sphere{
             setCollisionBriqueBas(false);
             setCollisionBriqueGauche(false);
             setCollisionBriqueDroite(false);
+            attributs.bainLave();
         }
     }
 
     // méthode pour gérer la collision de la balle avec le coté supérieur de la barre
-    public void collisionBarreHaut(Barre barre,Balle balle){
+    public void collisionBarreHaut(Barre barre,Balle balle, Attributs attributs){
         int balleX, balleY;
         int barreX, barreY;
         for(int i=0;i<balle.getListePointSphere().size();i++){
@@ -133,12 +137,15 @@ public class Balle extends Sphere{
                         if(balleX<barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                             barre.setPremiereCollision(barre.getPremiereCollision()+1);
+                            attributs.chocBarre();
                         }else if(balleX>barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                             balle.inverseVitesseHorizontale();
                             barre.setPremiereCollision(barre.getPremiereCollision()+1);
+                            attributs.chocBarre();
                         }else if(balleX==barre.getMilieuX()){
                         balle.inverseVitesseVerticale();
+                            attributs.chocBarre();
                         //on ne modifie pas lma valeur de première collision,permet un tir vertical
                             // tant que le centre de la barre est touché. Ne marche pas, sera corrigé plus tard
                         }
@@ -149,6 +156,7 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balleX>barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                             balle.inverseVitesseHorizontale();
@@ -156,8 +164,10 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balleX==barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
+                            attributs.chocBarre();
                         }
                     }else if(balle.getVitesseHorizontale()>0){
                         if(balleX<barre.getMilieuX()){
@@ -167,14 +177,17 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balleX>barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
                             setCollisionBriqueHaut(false);
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balleX==barre.getMilieuX()){
                             balle.inverseVitesseVerticale();
+                            attributs.chocBarre();
                         }
                     }
                 }
@@ -184,7 +197,7 @@ public class Balle extends Sphere{
 
     // méthode pour gérer la collision de la balle avec le coté gauche de la barre,permet eventuellement de rattraper
     // la balle, dans une certaine mesure
-    public void collisionBarreGauche(Barre barre,Balle balle){
+    public void collisionBarreGauche(Barre barre,Balle balle, Attributs attributs){
         int balleX, balleY;
         int barreX, barreY;
         for(int i=0;i<balle.getListePointSphere().size();i++){
@@ -202,6 +215,7 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balle.getVitesseHorizontale()>0) {
                             balle.inverseVitesseVerticale();
                             balle.inverseVitesseHorizontale();
@@ -209,6 +223,7 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }
                     }else{
                         inverseVitesseHorizontale();
@@ -216,6 +231,7 @@ public class Balle extends Sphere{
                         setCollisionBriqueBas(false);
                         setCollisionBriqueGauche(false);
                         setCollisionBriqueDroite(false);
+                        attributs.chocBarre();
                     }
                 }
             }
@@ -224,7 +240,7 @@ public class Balle extends Sphere{
 
     // méthode pour gérer la collision de la balle avec le coté gauche de la barre,permet eventuellement de rattraper
     // la balle, dans une certaine mesure
-    public void collisionBarreDroit(Barre barre,Balle balle){
+    public void collisionBarreDroit(Barre barre,Balle balle, Attributs attributs){
         int balleX, balleY;
         int barreX, barreY;
         for(int i=0;i<balle.getListePointSphere().size();i++){
@@ -243,12 +259,14 @@ public class Balle extends Sphere{
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }else if(balle.getVitesseHorizontale()>0) {
                             balle.inverseVitesseVerticale();
                             setCollisionBriqueHaut(false);
                             setCollisionBriqueBas(false);
                             setCollisionBriqueGauche(false);
                             setCollisionBriqueDroite(false);
+                            attributs.chocBarre();
                         }
                     }else{
                         inverseVitesseHorizontale();
@@ -256,6 +274,7 @@ public class Balle extends Sphere{
                         setCollisionBriqueBas(false);
                         setCollisionBriqueGauche(false);
                         setCollisionBriqueDroite(false);
+                        attributs.chocBarre();
                     }
                 }
             }

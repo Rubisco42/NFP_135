@@ -455,15 +455,15 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 }
 
                 // gestion des collision de la balle avec les paroies de l'environnement.
-                balle.collisionDroite();
-                balle.collisionGauche();
-                balle.collisionHaut();
+                balle.collisionDroite(attributs);
+                balle.collisionGauche(attributs);
+                balle.collisionHaut(attributs);
                 balle.collisionBas(attributs, barre);
 
                 // gestion de la collision de la balle avec la barre
-                balle.collisionBarreHaut(barre,balle);
-                balle.collisionBarreGauche(barre,balle);
-                balle.collisionBarreDroit(barre,balle);
+                balle.collisionBarreHaut(barre,balle, attributs);
+                balle.collisionBarreGauche(barre,balle, attributs);
+                balle.collisionBarreDroit(barre,balle, attributs);
 
 
 
