@@ -1,12 +1,10 @@
 package com.company;
-
-import org.w3c.dom.ls.LSOutput;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JButton;
 
 import java.util.ArrayList;
 
@@ -23,6 +21,12 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
     //on initialise l'instance d'Attributs attributs ici pour qu'elle soit visible des keylisteners
     Attributs attributs=null;
 
+    // on initialise les différents boutons, permet les réglages dans le constructeur
+    JButton nouvelEssai;//permet de remettre à zero la partie en cas de défaite de victoire
+    JButton musiqueOn;//relance la musique
+    JButton musiqueOff;//pause la musique
+
+
 
     public CasseBriques(){
         setSize(500,500);
@@ -37,7 +41,31 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
         addKeyListener(this);
         requestFocus();
         setFocusable(true);
-
+        nouvelEssai=new JButton("TRY AGAIN");// définit au passage le texte du bouton
+        nouvelEssai.setBounds(200,400,100,50);
+        nouvelEssai.addActionListener(e ->attributs.setTryAgain(true));// l'expression lambda evite d'avoir à implémenter
+        //une méthode actionListener. Définit l'action du bouton une fois cliqué.
+        nouvelEssai.setFocusable(false);//evite l'apparition du rectangle entourant le texte du bouton
+        nouvelEssai.setFont(new Font("Courier",Font.PLAIN,12));
+        nouvelEssai.setBorder(BorderFactory.createEtchedBorder());//donne un effet de relief au bouton
+        nouvelEssai.setForeground(Color.GREEN);//definit la couleur du premier plan (donc du text du bouton)
+        nouvelEssai.setBackground(Color.MAGENTA);//definit la couleur du bouton
+        musiqueOn=new JButton("ON");
+        musiqueOn.setBounds(400,2,30,15);
+        //musiqueOn.addActionListener();
+        musiqueOn.setFocusable(false);
+        musiqueOn.setFont(new Font("Courier",Font.PLAIN,10));
+        musiqueOn.setBorder(BorderFactory.createEtchedBorder());
+        musiqueOn.setForeground(Color.GREEN);
+        musiqueOn.setBackground(Color.GRAY);
+        musiqueOff=new JButton("OFF");
+        musiqueOff.setBounds(435,2,30,15);
+        //musiqueOff.addActionListener();
+        musiqueOff.setFocusable(false);
+        musiqueOff.setFont(new Font("Courier",Font.PLAIN,10));
+        musiqueOff.setBorder(BorderFactory.createEtchedBorder());
+        musiqueOff.setForeground(Color.RED);
+        musiqueOff.setBackground(Color.GRAY);
 
         initialisationJeu();
     }
@@ -71,7 +99,6 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 brique.remplirCoteDroit();
                 listeBriques.add(brique);
             }
-
         }
 
         //on initialise les différents champs de la classe attributs en créant une instance d'Attributs
@@ -92,6 +119,54 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
         while(true){
             Graphics2D dessin = (Graphics2D)getBufferStrategy().getDrawGraphics();
 
+            //redémarre la partie en cas de défaite, ou de victoire
+            if(attributs.isTryAgain()==true){
+                attributs.setGameOver(false);
+                attributs.setVictoire(false);
+                attributs.setStart(false);
+                attributs.setLancement(false);
+                attributs.setTryAgain(false);
+                attributs.setNbrVies(3);
+                attributs.setScore(0);
+                listeBriques.clear();
+                for(int i=0; i<5;i++){
+                    for(int j=0;j<10;j++){
+                        brique=new Briques();
+                        brique.setPositionX(10+(j*brique.getLargeur()));
+                        brique.setPositionY(60+(i*brique.getHauteur()));
+                        brique.remplirCoteHaut();
+                        brique.remplirCoteBas();
+                        brique.remplirCoteGauche();
+                        brique.remplirCoteDroit();
+                        listeBriques.add(brique);
+                    }
+                }
+                barre.setPositionX(220);
+                barre.setPositionY(482);
+                barre.setLargeur(60);
+                barre.setHauteur(10);
+                barre.setMilieuX(250);
+                barre.setMilieuY(482);
+                barre.setVitesse(2);
+                barre.setPremiereCollision(0);
+                barre.modifMilieuHaut(barre);
+                barre.modifMilieuGauche(barre);
+                barre.modifMilieuDroit(barre);
+                barre.majCoteHaut(barre);
+                barre.majCoteGauche(barre);
+                barre.majCoteDroit(barre);
+                balle.setPositionX(barre.getMilieuX()-5);
+                balle.setPositionY(barre.getMilieuY()-10);
+                balle.setLargeur(10);
+                balle.setHauteur(10);
+                balle.setRayon(5);
+                balle.setPositionCentreX();
+                balle.setPositionCentreY();
+                balle.majCoordoCentre(balle);
+                balle.majListePointSphere(balle);
+            }
+
+            // arret de la boucle en cas de victoire ou de défaite
             while(attributs.isGameOver()==false&&attributs.isVictoire()==false){
                 // effacer le dessin pour donner le mouvement et affichage des bordures de la zone de jeu:
                 dessin.setColor(Color.BLACK);
@@ -99,7 +174,8 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 // bordure haute (chez moi la balle rentre dans l'entête de la fenêtre)
                 dessin.setColor(Color.DARK_GRAY);
                 dessin.fillRect(0,0,500,60);
-                // on affiche le nombre de vies, le nombre de briques détruites et le score en haut de l'écran
+                // on affiche le nombre de vies, le nombre de briques détruites, le score et les boutons
+                // de gestion de la musique en haut de la fenêtre
                 dessin.setColor(Color.WHITE);
                 dessin.setFont(new Font("courier",Font.PLAIN,10));
                 dessin.drawString("Vie:",10,50);
@@ -120,6 +196,11 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 dessin.drawString("Score:",210,50);
                 dessin.setColor(Color.BLUE);
                 dessin.drawString(String.valueOf(attributs.getScore()),250,50);
+                dessin.setColor(Color.WHITE);
+                dessin.setFont(new Font("courier",Font.PLAIN,10));
+                dessin.drawString("Musique:",350,50);
+                add(musiqueOn);
+                add(musiqueOff);
                 // bordure gauche:
                 dessin.setColor(Color.DARK_GRAY);
                 dessin.fillRect(0,0,10,500);
@@ -153,6 +234,8 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
 
                 // on modifie les positions X et Y de la (les) balle(s) pour qu'elle(s) se déplace(nt) sur l'écran
                 //en fonction de l'état de la partie (debut ou en cours de jeu)
+
+                //permet de modifier le comportement de la balle après la première collision
                 if(barre.getPremiereCollision()==2){
                     attributs.setLancement(true);
                 }
@@ -343,16 +426,27 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                     attributs.setVictoire(true);
                     dessin.setColor(Color.CYAN);
                     dessin.setFont(new Font("courier",Font.PLAIN,60));
-                    dessin.drawString("GG",170,350);
+                    dessin.drawString("GG",170,200);
                     dessin.setColor(Color.WHITE);
                     dessin.setFont(new Font("courier",Font.PLAIN,30));
-                    dessin.drawString("Score:",170,430);
+                    dessin.drawString("Score:",170,270);
                     dessin.setColor(Color.BLUE);
-                    dessin.drawString(String.valueOf(attributs.getScore()),220,430);
+                    dessin.drawString(String.valueOf(attributs.getScore()),260,350);
+                    add(nouvelEssai);
                 }
 
                 //gestion de la condition de défaite
                 if(attributs.getNbrVies()==0){
+                    attributs.setGameOver(true);
+                    dessin.setColor(Color.RED);
+                    dessin.setFont(new Font("courier",Font.PLAIN,60));
+                    dessin.drawString("GAME OVER",170,200);
+                    dessin.setColor(Color.WHITE);
+                    dessin.setFont(new Font("courier",Font.PLAIN,30));
+                    dessin.drawString("Score:",170,270);
+                    dessin.setColor(Color.BLUE);
+                    dessin.drawString(String.valueOf(attributs.getScore()),260,350);
+                    add(nouvelEssai);
 
                 }
 
@@ -406,7 +500,6 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
     }
 
     // accesseurs pour la classe CasseBriques
-
 
     public boolean isFlecheGauche() {
         return flecheGauche;
