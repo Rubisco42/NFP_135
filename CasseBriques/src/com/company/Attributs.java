@@ -24,6 +24,7 @@ public class Attributs {
     Clip destructionBrique;
     Clip lave;
     Clip perdu;
+    Clip gagne;
 
     //on stock tout les chemin pour les fichiers audio sources
     String cheminmusique="src/com/company/sons/Brick Morty.wav";
@@ -31,6 +32,10 @@ public class Attributs {
     String cheminLave="src/com/company/sons/VOXScrm_Cri wilhelm (ID 0477)_LS.aiff";
     String cheminBarre="src/com/company/sons/MUSCInst_Mbira note 4 (ID 2288)_LS.aiff";
     String cheminBrique="src/com/company/sons/MUSCInst_Mbira note 3 (ID 2287)_LS.aiff";
+    String cheminExplosion="src/com/company/sons/EXPLReal_Explosion 1 (ID 1807)_LS.aiff";
+    String cheminGameOver="src/com/company/sons/TOYElec_Docteur maboul 4 (ID 1685)_LS.aiff";
+    String cheminVictoire="src/com/company/sons/MUSCInst_Mbira note 5 (ID 2289)_LS.aiff";
+    String cheminLancement="src/com/company/sons/LASRGun_Blaster star wars 2 (ID 1758)_LS.aiff";
 
     public Attributs() {
         setNbrVies(3);
@@ -44,6 +49,11 @@ public class Attributs {
         chargementSonParoie();
         chargementSonLave();
         chargementSonBarre();
+        chargementSonBrique();
+        chargementExplosionBrique();
+        chargementGameOver();
+        chargementVictoire();
+        chargementLancement();
     }
 
     //gestion de l'audio:
@@ -138,10 +148,74 @@ public class Attributs {
         }
     }
 
+    //preparation de la destruction des briques
+    public void chargementExplosionBrique(){
+        try{
+            File explosion=new File(cheminExplosion);
+            AudioInputStream ExploBrique= AudioSystem.getAudioInputStream(explosion);
+            destructionBrique =AudioSystem.getClip();
+            destructionBrique.open(ExploBrique);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation du game over
+    public void chargementGameOver(){
+        try{
+            File gameOver=new File(cheminGameOver);
+            AudioInputStream finPartie= AudioSystem.getAudioInputStream(gameOver);
+            perdu =AudioSystem.getClip();
+            perdu.open(finPartie);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation de la victoire
+    public void chargementVictoire(){
+        try{
+            File victoire=new File(cheminVictoire);
+            AudioInputStream partieGagne= AudioSystem.getAudioInputStream(victoire);
+            gagne =AudioSystem.getClip();
+            gagne.open(partieGagne);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //preparation du premier lancement de balle
+    public void chargementLancement(){
+        try{
+            File lancement=new File(cheminLancement);
+            AudioInputStream sonLancement= AudioSystem.getAudioInputStream(lancement);
+            lancementBalle =AudioSystem.getClip();
+            lancementBalle.open(sonLancement);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+    }
+
     //methode pour lire la musique en boucle
     public void boucleMusicale(){
         musiqueJeu.setFramePosition(0);//on part du début du morceau
-        musiqueJeu.loop(10000000);// repetition infinie
+        musiqueJeu.loop(10000000);// repetition +++
     }
 
     //on arrête la musique
@@ -160,6 +234,26 @@ public class Attributs {
 
     public void chocBarre(){
         collisionBarre.start();
+    }
+
+    public void chocBrique(){
+        collisionBrique.start();
+    }
+
+    public void destructionBrique(){
+        destructionBrique.start();
+    }
+
+    public void gameOver(){
+        perdu.start();
+    }
+
+    public void gagne(){
+        gagne.start();
+    }
+
+    public void lancement(){
+        lancementBalle.start();
     }
 
 

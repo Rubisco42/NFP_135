@@ -233,6 +233,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 //gestion de la condition de victoire
                 if(attributs.getBriquesDétruites()==50){
                     attributs.setVictoire(true);
+                    attributs.gagne();
                     dessin.setColor(Color.CYAN);
                     dessin.setFont(new Font("courier",Font.PLAIN,60));
                     dessin.drawString("GG",170,270);
@@ -247,6 +248,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                 //gestion de la condition de défaite
                 if(attributs.getNbrVies()==0){
                     attributs.setGameOver(true);
+                    attributs.gameOver();
                     dessin.setColor(Color.RED);
                     dessin.setFont(new Font("courier",Font.PLAIN,60));
                     dessin.drawString("GAME OVER",170,270);
@@ -353,6 +355,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                     balle.setCollisionBriqueBas(false);
                                     balle.setCollisionBriqueGauche(false);
                                     balle.setCollisionBriqueDroite(false);
+                                    attributs.chocBrique();
                                     // on détruit la brique si ça resistance atteint 0
                                     if(getListeBriques().get(j).getResistance()==0){
                                         getListeBriques().get(j).setEstdetruite(true);
@@ -360,6 +363,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                         attributs.setBriquesDétruites(attributs.getBriquesDétruites()+1);
                                         //on augmente le score de 100 par brique détruite
                                         attributs.setScore(attributs.getScore()+100);
+                                        attributs.destructionBrique();
                                     }
                                 }
                             }
@@ -384,6 +388,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                     balle.setCollisionBriqueHaut(false);
                                     balle.setCollisionBriqueGauche(false);
                                     balle.setCollisionBriqueDroite(false);
+                                    attributs.chocBrique();
                                     if(barre.getPremiereCollision()==0){// pour avoir des direction differente entre le lancement
                                         barre.setPremiereCollision(barre.getPremiereCollision()+1);//de la partie et le jeu en cours.
                                     }
@@ -391,6 +396,7 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                         getListeBriques().get(j).setEstdetruite(true);
                                         attributs.setBriquesDétruites(attributs.getBriquesDétruites()+1);
                                         attributs.setScore(attributs.getScore()+100);
+                                        attributs.destructionBrique();
                                     }
                                 }
                             }
@@ -415,10 +421,12 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                     balle.setCollisionBriqueBas(false);
                                     balle.setCollisionBriqueHaut(false);
                                     balle.setCollisionBriqueDroite(false);
+                                    attributs.chocBrique();
                                     if(getListeBriques().get(j).getResistance()==0){
                                         getListeBriques().get(j).setEstdetruite(true);
                                         attributs.setBriquesDétruites(attributs.getBriquesDétruites()+1);
                                         attributs.setScore(attributs.getScore()+100);
+                                        attributs.destructionBrique();
                                     }
                                 }
                             }
@@ -443,10 +451,12 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
                                     balle.setCollisionBriqueBas(false);
                                     balle.setCollisionBriqueHaut(false);
                                     balle.setCollisionBriqueGauche(false);
+                                    attributs.chocBrique();
                                     if(getListeBriques().get(j).getResistance()==0){
                                         getListeBriques().get(j).setEstdetruite(true);
                                         attributs.setBriquesDétruites(attributs.getBriquesDétruites()+1);
                                         attributs.setScore(attributs.getScore()+100);
+                                        attributs.destructionBrique();
                                     }
                                 }
                             }
@@ -500,6 +510,9 @@ public class CasseBriques extends JFrame implements KeyListener/*, ActionListene
             setFlecheDroite(true);
         }
         if(e.getKeyCode()==KeyEvent.VK_UP){
+            if(attributs.isStart()==false){
+                attributs.lancement();
+            }
             attributs.setStart(true);
         }
 
